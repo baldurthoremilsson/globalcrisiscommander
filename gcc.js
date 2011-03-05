@@ -1,4 +1,5 @@
 $(function() {
+    console.log("start");
     var myLatlng = new google.maps.LatLng(-34.397, 150.644);
     var myOptions = {
         zoom: 8,
@@ -12,4 +13,5 @@ $(function() {
     $(window).resize(function() {
         $("#map_canvas").height($("#map_canvas").height($(window).height()-MENU_SIZE));
     });
+    console.log("finish");
 });
