@@ -1,7 +1,7 @@
 $(function() {
-    var myLatlng = new google.maps.LatLng(-34.397, 150.644);
+    var myLatlng = new google.maps.LatLng(48.860706, 2.341182);
     var myOptions = {
-        zoom: 8,
+        zoom: 3,
         center: myLatlng,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     }
@@ -13,3 +13,4 @@ $(function() {
         $("#map_canvas").height($("#map_canvas").height($(window).height()-MENU_SIZE));
     });
 });
+
