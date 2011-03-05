@@ -6,5 +6,7 @@ $(function() {
     }
     var MENU_SIZE = 150;
     $("#map_canvas").height($(window).height()-MENU_SIZE);
-    $(window).resize($("#map_canvas").height($("#map_canvas").height($(window).height()-MENU_SIZE)));
+    $(window).resize(function() {
+        $("#map_canvas").height($("#map_canvas").height($(window).height()-MENU_SIZE));
+    });
 });
