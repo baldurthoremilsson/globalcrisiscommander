@@ -1,7 +1,7 @@
 $(function() {
     var myLatlng = new google.maps.LatLng(48.860706, 2.341182);
     var myOptions = {
-        zoom: 3,
+        zoom: 15,
         center: myLatlng,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     }
