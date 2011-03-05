@@ -11,7 +11,6 @@ body {
 }
 
 #map_dock {
-    padding-bottom: 200px;
     height: 100%;
 }
     #map_canvas {
