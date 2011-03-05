@@ -24,6 +24,8 @@ $(function() {
     google.maps.event.addListener(marker, 'click', function() {
         alert('sprell');
     });
+    
+    $(".dockitem").draggable();
 });
 
 function dockItem() {
