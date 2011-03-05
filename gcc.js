@@ -12,5 +12,17 @@ $(function() {
     $(window).resize(function() {
         $("#map_canvas").height($("#map_canvas").height($(window).height()-MENU_SIZE));
     });
+    
+    var markerPos = new google.maps.LatLng(48.855801, 2.324073);
+    var marker = new google.maps.Marker({
+        position: markerPos,
+        map: map,
+        title: 'FIRE AT THE BAKERY',
+        icon: "assets/pics/fire-icon.png",
+    });
+    
+    google.maps.event.addListener(marker, 'click', function() {
+        alert('sprell');
+    });
 });
 
