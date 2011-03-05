@@ -1,28 +1,24 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-<style type="text/css">
-  html { height: 100% }
-  body { height: 100%; margin: 0px; padding: 0px }
-  #map_canvas { height: 100% }
-</style>
-<script src="http://maps.google.com/maps?file=api&sensor=false&key=ABQIAAAA75ZEa6CDu4VQkm-sz_0B8xQ-GoVlCb7B3qifPD_nGsiolkViBhQwmscYnsWNT_xwM0VaMrIWo9asRA" type="text/javascript"></script>
-<script type="text/javascript">
-  function initialize() {
-    var latlng = new google.maps.LatLng(64.097, -21.844);
-    var myOptions = {
-      zoom: 15,
-      center: latlng,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    var map = new google.maps.Map(document.getElementById("map_canvas"),
-        myOptions);
-  }
+<!DOCTYPE html "-//W3C//DTD XHTML 1.0 Strict//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>Google Maps JavaScript API Example</title>
+    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAA75ZEa6CDu4VQkm-sz_0B8xQ-GoVlCb7B3qifPD_nGsiolkViBhQwmscYnsWNT_xwM0VaMrIWo9asRA&sensor=false"
+            type="text/javascript"></script>
+    <script type="text/javascript">
 
-</script>
-</head>
-<body onload="initialize()">
-  <div id="map_canvas" style="width:100%; height:100%"></div>
-</body>
+    function initialize() {
+      if (GBrowserIsCompatible()) {
+        var map = new GMap2(document.getElementById("map_canvas"));
+        map.setCenter(new GLatLng(37.4419, -122.1419), 13);
+        map.setUIToDefault();
+      }
+    }
+
+    </script>
+  </head>
+  <body onload="initialize()" onunload="GUnload()">
+    <div id="map_canvas" style="width: 500px; height: 300px"></div>
+  </body>
 </html>
