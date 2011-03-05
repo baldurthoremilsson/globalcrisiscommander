@@ -15,7 +15,7 @@ var icons = {
         fire: "assets/pics/fire-icon.png"
     },
     stations: {
-        firestation: "assets/pics/firestation.png"
+        firestation: "assets/pics/firestation-icon.png"
     }
 }
 
