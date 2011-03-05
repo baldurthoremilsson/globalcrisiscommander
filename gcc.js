@@ -1,9 +1,12 @@
 $(function() {
-    if (GBrowserIsCompatible()) {
-        var map = new GMap2(document.getElementById("map_canvas"));
-        map.setCenter(new GLatLng(37.4419, -122.1419), 13);
-        map.setUIToDefault();
+    var myLatlng = new google.maps.LatLng(-34.397, 150.644);
+    var myOptions = {
+        zoom: 8,
+        center: myLatlng,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
     }
+    var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+    
     var MENU_SIZE = 150;
     $("#map_canvas").height($(window).height()-MENU_SIZE);
     $(window).resize(function() {
