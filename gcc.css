@@ -6,13 +6,13 @@ html {
 
 body {
     padding-right: 200px;
-    padding-bottom: 200px;
     margin: 0;
     height: 100%;
 }
 
 #map_dock {
     padding-bottom: 200px;
+    height: 100%;
 }
     #map_canvas {
         height: 100%;
