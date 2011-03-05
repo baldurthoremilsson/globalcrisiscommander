@@ -24,6 +24,14 @@ body {
         bottom: 0;
         background: blue;
     }
+        .dockitem {
+            height: 130px;
+            width: 70px;
+            margin: 10px;
+            position: relative;
+            display: inline-block;
+            background-color: #AAF;
+        }
 
 #sidebar {
     position: absolute;

@@ -26,3 +26,6 @@ $(function() {
     });
 });
 
+function dockItem() {
+    
+}
