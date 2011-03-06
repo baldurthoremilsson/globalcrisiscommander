@@ -56,6 +56,9 @@ $(function() {
     var myOptions = {
         zoom: 15,
         center: myLatlng,
+		zoomControl: false,
+		panControl: false,
+		scaleControl: false,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     }
     var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
