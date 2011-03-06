@@ -81,3 +81,36 @@ $(function() {
 function dockItem() {
     
 }
+
+$().ready(function(){
+	//SETUP Mp3 files player example
+	var playerMp3 = new SWFObject("player.swf","myplayer1","0","0","9");
+	//playerMp3.addVariable("logo","css/images/logo.jpg");
+	playerMp3.addVariable("file","assets/songs/BraveHeart.mp3");
+	playerMp3.addVariable("icons","false");
+	playerMp3.write("player1");
+	//create a javascript object to allow us send events to the flash player
+	var player1 = document.getElementById("myplayer1");
+	var mute1 = 0;
+	var status1 = $("#status1");
+	
+	//EVENTS for Mp3 files player
+	$("#play1").click(function(){
+		player1.sendEvent("PLAY","true");
+		status1.text("PLAYING...");
+	});
+	$("#pause1").click(function(){
+		player1.sendEvent("PLAY","false");
+		status1.text("PAUSED");
+	});
+	$("#mute1").click(function(){
+		if(mute1 == 0){
+			player1.sendEvent("mute","true");
+			mute1 = 1;
+		}
+		else{
+			player1.sendEvent("mute","false");
+			mute1 = 0;
+		}
+	});
+});

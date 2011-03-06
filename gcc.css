@@ -63,3 +63,35 @@ body {
             -border-radius: 7px;
             cursor: move;
     }
+
+#container{
+	width: 600px;
+	margin: 40px auto;
+	text-align: left;
+}
+/******* /CONTAINER *******/
+/******* CONTENT *******/
+div.content span{
+	display: block;
+	font-weight: 700;
+	color: #898989;
+	margin-top: 10px;
+}
+div.content{
+	padding: 0 10px 20px 30px;
+	margin-bottom: 20px;
+}
+div.content a{
+	margin: 0 4px 0 4px;
+	color: #9a9a9a;
+}
+div.content a:hover{
+	color: #5f95ef;
+	text-decoration: underline;
+}
+div.content div.status{
+	font-size: 10px;
+	border-bottom: 1px solid #a5a5a5;
+	margin-bottom: 4px;
+	color: #5f95ef;
+}
