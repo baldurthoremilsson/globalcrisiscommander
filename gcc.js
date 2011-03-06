@@ -60,10 +60,14 @@ $(function() {
     }
     var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
     
-    var MENU_SIZE = 150;
-    $("#map_canvas").height($(window).height()-MENU_SIZE);
+    var MENU_SIZE = 152;
+    $("#map_canvas")
+        .height($(window).height()-MENU_SIZE)
+        .width($(window).width()-MENU_SIZE);
     $(window).resize(function() {
-        $("#map_canvas").height($("#map_canvas").height($(window).height()-MENU_SIZE));
+        $("#map_canvas")
+            .height($(window).height()-MENU_SIZE)
+            .width($(window).width()-MENU_SIZE);
     });
     
     for(i = 0; i < gcc.accidents.length; i++) {
