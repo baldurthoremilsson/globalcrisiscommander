@@ -64,13 +64,11 @@ body {
             cursor: move;
     }
 
-/*
+
 #mp3container{
-	width: 600px;
-	margin: 40px auto;
-	text-align: left;
+
 }
-*/
+
 div.top_header span{
 	display: block;
 	font-weight: 700;
