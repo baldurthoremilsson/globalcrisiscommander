@@ -64,22 +64,22 @@ body {
             cursor: move;
     }
 
+/*
 #mp3container{
 	width: 600px;
 	margin: 40px auto;
 	text-align: left;
 }
-/******* /CONTAINER *******/
-/******* top_header *******/
+*/
 div.top_header span{
 	display: block;
 	font-weight: 700;
 	color: #898989;
-	margin-top: 10px;
 }
 div.top_header{
 	padding: 0 10px 20px 30px;
 	margin-bottom: 20px;
+	background: #DDF;
 }
 div.top_header a{
 	margin: 0 4px 0 4px;
