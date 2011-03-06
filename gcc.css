@@ -70,26 +70,26 @@ body {
 	text-align: left;
 }
 /******* /CONTAINER *******/
-/******* CONTENT *******/
-div.content span{
+/******* top_header *******/
+div.top_header span{
 	display: block;
 	font-weight: 700;
 	color: #898989;
 	margin-top: 10px;
 }
-div.content{
+div.top_header{
 	padding: 0 10px 20px 30px;
 	margin-bottom: 20px;
 }
-div.content a{
+div.top_header a{
 	margin: 0 4px 0 4px;
 	color: #9a9a9a;
 }
-div.content a:hover{
+div.top_header a:hover{
 	color: #5f95ef;
 	text-decoration: underline;
 }
-div.content div.status{
+div.top_header div.status{
 	font-size: 10px;
 	border-bottom: 1px solid #a5a5a5;
 	margin-bottom: 4px;
