@@ -114,3 +114,8 @@ $().ready(function(){
 		}
 	});
 });
+
+function animate()
+{
+	
+}
