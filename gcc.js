@@ -143,3 +143,8 @@ $().ready(function(){
 		}
 	});
 });
+
+function animate()
+{
+	
+}
