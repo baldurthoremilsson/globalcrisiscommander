@@ -2,6 +2,8 @@ html {
     margin: 0;
     padding: 0;
     height: 100%;
+    background-image: url('assets/pics/metal012.jpg');
+
 }
 
 body {
@@ -25,7 +27,7 @@ body {
         height: 150px;
         position: absolute;
         bottom: 0;
-        background: #DDF;
+       /* background: #DDF;*/
     }
         .dockitem {
             height: 126px;
@@ -34,7 +36,7 @@ body {
             margin-right: 0;
             position: relative;
             display: inline-block;
-            background-color: #9AF;
+            background-color: black/*#9AF*/;
             border: 2px solid black;
             -moz-border-radius: 7px;
             -webkit-border-radius: 7px;
@@ -47,7 +49,7 @@ body {
     right: 0;
     height: 100%;
     width: 150px;
-    background: #DDF;
+    /*background: #DDF;*/
 }
     .sidebaritem {
             height: 96px;
@@ -56,7 +58,7 @@ body {
             margin-bottom: 0;
             position: relative;
             display: inline-block;
-            background-color: #9AF;
+            background-color: black/*#9AF*/;
             border: 2px solid black;
             -moz-border-radius: 7px;
             -webkit-border-radius: 7px;
@@ -136,4 +138,19 @@ position:absolute;
 color:#6fa5fd;  
 font-weight:700;  
 display:block;  
+}
+
+img.accident{
+width:60px;
+height:80px;
+position:absolute;
+top:5px;
+left: 5px;
+}
+
+#item_desc {
+display:none;
+font-family:"Times New Roman";
+font-size:20px;
+color:white;
 }

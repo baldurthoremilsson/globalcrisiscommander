@@ -1,4 +1,4 @@
-﻿var popupStatus = 0;
+var popupStatus = 0;
 
 function loadPopup(){
 	if(popupStatus==0){

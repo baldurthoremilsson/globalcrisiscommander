@@ -28,14 +28,30 @@ function addAccident(accident, map) {
     });
     google.maps.event.addListener(marker, 'click', function() {
         $("#dock").empty();
-        var dockitem = $('<div class="dockitem">THERE IS A FIRE</div>').droppable({
+        var dockitem = $('<div class="dockitem"><div id="item_desc">Ble</div><div id="item_image"><img class="accident" src="assets/pics/fire.jpg/></div></div>').droppable({
             drop: function( event, ui ) {
                 alert('YOU WIN');
             }
+        }).mouseenter(function() {
+            $(this).find("#item_image").css({"opacity":"0.6"});
+            $(this).find("#item_desc").fadeIn();
+        }).mouseleave(function() { 
+            $(this).find("#item_desc").fadeOut();
+            $(this).find("#item_image").css({"opacity":"1.0"});
+
         });
+        // Place the image in the center
+        var width = $(dockitem).width();
+        var height = $(dockitem).height();
+        var imgwidth = $(dockitem).find("img").width();
+        var imgheight = $(dockitem).find("img").height();
+        $(dockitem).find("img").css({"top":height/2-imgheight/2, "left":width/2-imgwidth/2});
         $("#dock").append(dockitem);
     });
 }
+
+
+
 
 function addStation(station, map) {
     var marker = new google.maps.Marker({
@@ -46,7 +62,20 @@ function addStation(station, map) {
     });
     google.maps.event.addListener(marker, 'click', function() {
         $("#sidebar").empty();
-        var sidebaritem = $('<div class="sidebaritem">FIRETRUCK</div>').draggable({revert: true});
+        var sidebaritem = $('<div class="sidebaritem"><div id="item_desc">Ble</div><div id="item_image"><img class="accident" src="assets/pics/firestation.png/></div></div>').draggable({revert: true}).mouseenter(function() {
+            $(this).find("#item_image").css({"opacity":"0.6"});
+            $(this).find("#item_desc").fadeIn();
+        }).mouseleave(function() { 
+            $(this).find("#item_desc").fadeOut();
+            $(this).find("#item_image").css({"opacity":"1.0"});
+
+        });
+   // Place the image in the center
+        var width = $(sidebaritem).width();
+        var height = $(sidebaritem).height();
+        var imgwidth = $(sidebaritem).find("img").width();
+        var imgheight = $(sidebaritem).find("img").height();
+        $(sidebaritem).find("img").css({"top":height/2-imgheight/2, "left":width/2-imgwidth/2});
         $("#sidebar").append(sidebaritem);
     });
 }
