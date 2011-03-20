@@ -69,8 +69,12 @@ function addStation(station, map) {
     google.maps.event.addListener(marker, 'click', function() {
         $("#sidebar").empty();
         var sidebaritem = $('<div class="sidebaritem"><div id="item_desc">Ble</div><div id="item_image"><img class="accident" src="assets/pics/firestation.png\></div></div>').draggable({revert: true}).mouseenter(function() {
-            $(this).find("#item_image").css({"opacity":"0.6"});
-            $(this).find("#item_desc").fadeIn('fast');
+            if(enableAnimation) 
+            {
+                enableAnimation = false;
+                $(this).find("#item_image").css({"opacity":"0.6"});
+                $(this).find("#item_desc").fadeIn('fast');
+            }
         }).mouseleave(function() { 
             $(this).find("#item_desc").fadeOut('fast',function(){enableAnimation = true;});
             $(this).find("#item_image").css({"opacity":"1.0"});
