@@ -1,15 +1,101 @@
 var gcc = {
-    accidents: [{
-        location: new google.maps.LatLng(48.855801, 2.324073),
-        type: "fire",
-        title: "Fire at the bakery"
-    }],
-    stations: [{
-        location: new google.maps.LatLng(48.861815, 2.343256),
-        type: "firestation"
-    }]
+    levels: [
+        {
+            location: {lat: 34.435169, long: -119.797239},
+            accidents: [
+                {
+                    location: {lat: 34.435169, long: -119.797239},
+                    type: "carcrash",
+                    incidents: []
+                }
+            ],
+            stations: [
+                {
+                    type: "firestation",
+                    location: {lat: 34.437416, long: -119.802518},
+                    units: 1
+                },
+                {
+                    type: "hospital",
+                    location: {lat: 34.434753, long: -119.794664},
+                    units: 2
+                },
+                {
+                    type: "policestation",
+                    location: {lat: 34.438469, long: -119.796177},
+                    units: 1
+                }
+            ],
+            description: {
+                title: "Car accident",
+                description: "here has been a three car crash on Hollister Avenue, Santa Barbara. Two people are injured, one of which is trapped in their car. Traffic is jammed near the accident."
+            }
+        }
+    ],
+    
 };
 
+gcc.Game = function(id) {
+    this.DOM.board = $("#" + id);
+    
+    this.DOM.mapDock
+        .append(this.DOM.map)
+        .append(this.DOM.dock);
+    this.DOM.board
+        .append(this.DOM.mapDock)
+        .append(this.DOM.sidebar);
+    
+    this.map = new google.maps.Map(this.DOM.map[0], this.mapOptions);
+    this.accidents = [];
+    this.stations = [];
+    
+    this.DOM.map
+        .height($(window).height()-this.MENU_SIZE)
+        .width($(window).width()-this.MENU_SIZE);
+    $(window).resize(function() {
+        DOM.map
+            .height($(window).height()-this.MENU_SIZE)
+            .width($(window).width()-this.MENU_SIZE);
+    });
+};
+
+gcc.Game.prototype = {
+    DOM: {
+        map: $('<div id="map_canvas"></div>'),
+        dock: $('<div id="dock"></div>'),
+        sidebar: $('<div id="sidebar"></div>'),
+        mapDock: $('<div id="map_dock"></div>')
+    },
+    mapOptions: {
+        zoom: 15,
+        center: new google.maps.LatLng(0, 0),
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    },
+    MENU_SIZE: 152,
+    
+    
+    startLevel: function(level) {
+        this.map.setCenter(new google.maps.LatLng(level.location.lat, level.location.long));
+    },
+    addUnit: function(unit) {
+    },
+    addAccident: function(accident) {
+    },
+    addStation: function(station) {
+    },
+    pause: function() {
+    },
+    play: function() {
+    }
+}
+
+
+$(function() {
+    gcc.game = new gcc.Game("board");
+    gcc.game.startLevel(gcc.levels[0]);
+});
+
+/*
 var icons = {
     accidents: {
         fire: "assets/pics/fire-icon.png"
@@ -143,3 +229,5 @@ $().ready(function(){
 		}
 	});
 });
+
+*/
