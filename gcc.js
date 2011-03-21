@@ -28,14 +28,17 @@ var gcc = {
             ],
             description: {
                 title: "Car accident",
-                description: "here has been a three car crash on Hollister Avenue, Santa Barbara. Two people are injured, one of which is trapped in their car. Traffic is jammed near the accident."
+                description: "There has been a three car crash on Hollister Avenue, Santa Barbara. Two people are injured, one of which is trapped in their car. Traffic is jammed near the accident."
             }
         }
     ],
     
 };
 
+// Game
 gcc.Game = function(id) {
+    var self = this;
+    
     this.DOM.board = $("#" + id);
     
     this.DOM.mapDock
@@ -53,9 +56,10 @@ gcc.Game = function(id) {
         .height($(window).height()-this.MENU_SIZE)
         .width($(window).width()-this.MENU_SIZE);
     $(window).resize(function() {
-        DOM.map
-            .height($(window).height()-this.MENU_SIZE)
-            .width($(window).width()-this.MENU_SIZE);
+        self.DOM.map
+            .height($(window).height()-self.MENU_SIZE)
+            .width($(window).width()-self.MENU_SIZE);
+        self.map.setCenter(self.location);
     });
 };
 
@@ -67,7 +71,7 @@ gcc.Game.prototype = {
         mapDock: $('<div id="map_dock"></div>')
     },
     mapOptions: {
-        zoom: 15,
+        zoom: 16,
         center: new google.maps.LatLng(0, 0),
         mapTypeId: google.maps.MapTypeId.ROADMAP
     },
@@ -75,20 +79,197 @@ gcc.Game.prototype = {
     
     
     startLevel: function(level) {
+        this.accidents = [];
+        this.stations = [];
+        
         this.map.setCenter(new google.maps.LatLng(level.location.lat, level.location.long));
+        
+        for(i in level.accidents)
+            this.addAccident(level.accidents[i]);
+        
+        for(i in level.stations)
+            this.addStation(level.stations[i]);
+        
+        this.displayAccidents();
+        this.displayStations();
     },
     addUnit: function(unit) {
     },
     addAccident: function(accident) {
+        var acc = new gcc.Accident(accident);
+        this.accidents.push(acc);
+        
+        acc.marker.setMap(this.map);
     },
     addStation: function(station) {
+        var st = new gcc.Station(station);
+        this.stations.push(st);
+        
+        st.marker.setMap(this.map);
     },
     pause: function() {
     },
     play: function() {
+    },
+    
+    displayAccidents: function() {
+        var dock = this.DOM.dock;
+        
+        dock.empty();
+        for(i in this.accidents) {
+            // FIXME: this logic should be in the Accident constructor
+            var acc = this.accidents[i];
+            acc.DOM
+                .mouseenter(acc.mouseenter)
+                .mouseleave(acc.mouseleave)
+                .click(acc.click);
+            dock.append(acc.DOM);
+        }
+    },
+    displayStations: function() {
+        var sidebar = this.DOM.sidebar;
+        
+        sidebar.empty();
+        for(i in this.stations) {
+            var st = this.stations[i];
+            // FIXME: this logig should be in the Station constructor
+            st.DOM
+                .mouseenter(st.mouseenter)
+                .mouseleave(st.mouseleave)
+                .click(st.click);
+            sidebar.append(st.DOM);
+        }
     }
 }
 
+// Accidents
+gcc.Accident = function(accident) {
+    var self = this,
+        dockImage,
+        markerImage;
+    
+    this.location = new google.maps.LatLng(accident.location.lat, accident.location.long);
+    this.type = accident.type;
+    
+    switch(this.type) {
+        case "fire":
+            dockImage = "assets/pics/fire-icon.png";
+            markerImage = "assets/pics/fire-icon.png";
+            break;
+        case "carcrash":
+            dockImage = "assets/pics/carcrash-icon.png";
+            markerImage = "assets/pics/carcrash-icon.png";
+            break;
+        case "robbery":
+            dockImage = "assets/pics/robbery-icon.png";
+            markerImage = "assets/pics/robbery-icon.png";
+            break;
+    }
+    
+    this.DOM = $('<div class="dockitem"><div id="item_desc">accident</div><div id="item_image"><img class="accident" src="' + dockImage + '"></div></div>');
+    
+    this.marker = new google.maps.Marker({
+        position: this.location,
+        icon: markerImage
+    });
+    google.maps.event.addListener(this.marker, 'click', function() {
+        self.click();
+    });
+}
+
+gcc.Accident.prototype = {
+    mouseenter: function() {
+        $(this).find("#item_image").css({"opacity":"0.6"});
+        $(this).find("#item_desc").fadeIn();
+    },
+    mouseleave: function() {
+        $(this).find("#item_desc").fadeOut();
+        $(this).find("#item_image").css({"opacity":"1.0"});
+    },
+    click: function() {
+        var link = $('<a href="#">Back</a>').click(function() {
+                gcc.game.displayAccidents();
+            });
+        gcc.game.DOM.dock.empty().append(link);
+        /*
+        var dock = gcc.game.DOM.dock,
+            dockitem = this.DOM,
+        // Place the image in the center
+            width = dockitem.width();
+            height = dockitem.height();
+            imgwidth = dockitem.find("img").width();
+            imgheight = dockitem.find("img").height();
+        
+        dockitem.find("img").css({"top":height/2-imgheight/2, "left":width/2-imgwidth/2});
+        
+        dock.empty().append(dockitem);
+        */
+    }
+}
+
+gcc.Station = function(station) {
+    var self = this,
+        dockImage,
+        markerImage;
+    
+    this.location = new google.maps.LatLng(station.location.lat, station.location.long);
+    this.type = station.type;
+    
+    switch(this.type) {
+        case "firestation":
+            dockImage = "assets/pics/firestation-icon.png";
+            markerImage = "assets/pics/firestation-icon.png";
+            break;
+        case "policestation":
+            dockImage = "assets/pics/policestation-icon.png";
+            markerImage = "assets/pics/policestation-icon.png";
+            break;
+        case "hospital":
+            dockImage = "assets/pics/hospital-icon.png";
+            markerImage = "assets/pics/hospital-icon.png";
+            break;
+    }
+    
+    this.DOM = $('<div class="sidebaritem"><div id="item_desc">accident</div><div id="item_image"><img class="accident" src="' + dockImage + '"></div></div>');
+    
+    this.marker = new google.maps.Marker({
+        position: this.location,
+        icon: markerImage
+    });
+    google.maps.event.addListener(this.marker, 'click', function() {
+        self.click();
+    });
+}
+
+gcc.Station.prototype = {
+    mouseenter: function() {
+        $(this).find("#item_image").css({"opacity":"0.6"});
+        $(this).find("#item_desc").fadeIn();
+    },
+    mouseleave: function() {
+        $(this).find("#item_desc").fadeOut();
+        $(this).find("#item_image").css({"opacity":"1.0"});
+    },
+    click: function() {
+        var link = $('<a href="#">Back</a>').click(function() {
+                gcc.game.displayStations();
+            });
+        gcc.game.DOM.sidebar.empty().append(link);
+        /*
+        var dock = gcc.game.DOM.dock,
+            dockitem = this.DOM,
+        // Place the image in the center
+            width = dockitem.width();
+            height = dockitem.height();
+            imgwidth = dockitem.find("img").width();
+            imgheight = dockitem.find("img").height();
+        
+        dockitem.find("img").css({"top":height/2-imgheight/2, "left":width/2-imgwidth/2});
+        
+        dock.empty().append(dockitem);
+        */
+    }
+}
 
 $(function() {
     gcc.game = new gcc.Game("board");
