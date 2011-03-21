@@ -286,6 +286,8 @@ var icons = {
     }
 }
 
+var enableAnimation = true;
+
 function addAccident(accident, map) {
     var marker = new google.maps.Marker({
         position: accident.location,
@@ -300,10 +302,14 @@ function addAccident(accident, map) {
                 alert('YOU WIN');
             }
         }).mouseenter(function() {
-            $(this).find("#item_image").css({"opacity":"0.6"});
-            $(this).find("#item_desc").fadeIn();
+            if(enableAnimation) 
+            {
+                enableAnimation = false;
+                $(this).find("#item_image").css({"opacity":"0.6"});
+                $(this).find("#item_desc").fadeIn('fast');
+            }
         }).mouseleave(function() { 
-            $(this).find("#item_desc").fadeOut();
+            $(this).find("#item_desc").fadeOut('fast',function(){enableAnimation = true;});
             $(this).find("#item_image").css({"opacity":"1.0"});
 
         });
@@ -330,10 +336,14 @@ function addStation(station, map) {
     google.maps.event.addListener(marker, 'click', function() {
         $("#sidebar").empty();
         var sidebaritem = $('<div class="sidebaritem"><div id="item_desc">Ble</div><div id="item_image"><img class="accident" src="assets/pics/firestation.png\></div></div>').draggable({revert: true}).mouseenter(function() {
-            $(this).find("#item_image").css({"opacity":"0.6"});
-            $(this).find("#item_desc").fadeIn();
+            if(enableAnimation) 
+            {
+                enableAnimation = false;
+                $(this).find("#item_image").css({"opacity":"0.6"});
+                $(this).find("#item_desc").fadeIn('fast');
+            }
         }).mouseleave(function() { 
-            $(this).find("#item_desc").fadeOut();
+            $(this).find("#item_desc").fadeOut('fast',function(){enableAnimation = true;});
             $(this).find("#item_image").css({"opacity":"1.0"});
 
         });
