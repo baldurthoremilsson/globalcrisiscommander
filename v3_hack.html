@@ -104,7 +104,6 @@ function initialize() {
 	strokeOpacity: 1.0
     });
 	
-	test1();
   }
 
 
@@ -206,20 +205,26 @@ function initialize() {
 }
 
 //=============== animation functions ======================
-      function updatePoly(d) {
-        if (poly2.getPath().getLength() > 100) {
-          poly2=new google.maps.Polyline([polyline.getPath().getAt(lastVertex-1)]);
-        }
+function updatePoly(d) 
+{
+	if (poly2.getPath().getLength() > 100) 
+	{
+		poly2=new google.maps.Polyline([polyline.getPath().getAt(lastVertex-1)]);
+	}
 
-        if (polyline.GetIndexAtDistance(d) < lastVertex+2) {
-           if (poly2.getPath().getLength()>1) {
-             poly2.getPath().removeAt(poly2.getPath().getLength()-1)
-           }
-           poly2.getPath().insertAt(poly2.getPath().getLength(),polyline.GetPointAtDistance(d));
-        } else {
-          poly2.getPath().insertAt(poly2.getPath().getLength(),endLocation.latlng);
-        }
-      }
+	if (polyline.GetIndexAtDistance(d) < lastVertex+2) 
+	{
+		if (poly2.getPath().getLength()>1) 
+		{
+			poly2.getPath().removeAt(poly2.getPath().getLength()-1)
+		}
+		poly2.getPath().insertAt(poly2.getPath().getLength(),polyline.GetPointAtDistance(d));
+	} 
+	else 
+	{
+		poly2.getPath().insertAt(poly2.getPath().getLength(),endLocation.latlng);
+	}
+}
 
 
 	  //this needs to be bound to some marker object
@@ -237,8 +242,8 @@ function initialize() {
 //this needs to be bound to some marker object
 function startAnimation() {
         eol=polyline.Distance();
-        poly2 = new google.maps.Polyline({path: [polyline.getPath().getAt(0)], strokeColor:"#0000FF", strokeWeight:10});
-        // map.addOverlay(poly2);
+        poly2 = new google.maps.Polyline({path: [polyline.getPath().getAt(0)], strokeColor:"#0000FF", 	
+				strokeWeight:10});
         setTimeout("animate(50)",2000);  // Allow time for the initial map display
 }
 
