@@ -205,16 +205,8 @@ function initialize() {
  });
 }
 
-  
-
-  
-
-
-
 //=============== animation functions ======================
       function updatePoly(d) {
-        // Spawn a new polyline every 20 vertices, because updating a 100-vertex poly is too slow
-		//or maybe not
         if (poly2.getPath().getLength() > 100) {
           poly2=new google.maps.Polyline([polyline.getPath().getAt(lastVertex-1)]);
         }
@@ -230,21 +222,19 @@ function initialize() {
       }
 
 
+	  //this needs to be bound to some marker object
       function animate(d) {
-		// alert("animate("+d+")");
         if (d>eol) {
-          //map.panTo(endLocation.latlng);
           marker.setPosition(endLocation.latlng);
           return;
         }
         var p = polyline.GetPointAtDistance(d);
-        //map.panTo(p);
         marker.setPosition(p);
         updatePoly(d);
         timerHandle = setTimeout("animate("+(d+step)+")", tick);
       }
 
-
+//this needs to be bound to some marker object
 function startAnimation() {
         eol=polyline.Distance();
         poly2 = new google.maps.Polyline({path: [polyline.getPath().getAt(0)], strokeColor:"#0000FF", strokeWeight:10});
@@ -252,14 +242,6 @@ function startAnimation() {
         setTimeout("animate(50)",2000);  // Allow time for the initial map display
 }
 
-//this will run when we call initialize that is when the page loads
-//but stops running when calcRoute is called
-function test1()
-{
-	//can't call twice, need to refactor.. Baldur HJÁLP
-	//calcRoute(48.821815,2.363256,48.825801,2.314073);
-	//calcRoute(48.861815,2.343256,48.855801,2.324073);
-}
 
 //=============== ~animation funcitons =====================
 
