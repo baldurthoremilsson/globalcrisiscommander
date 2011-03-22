@@ -1,7 +1,6 @@
 /*********************************************************************\
 *                                                                     *
 * epolys.js                                          by Mike Williams *
-* updated to API v3                                  by Larry Ross    *
 *                                                                     *
 * A Google Maps API Extension                                         *
 *                                                                     *
