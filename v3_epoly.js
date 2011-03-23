@@ -1,7 +1,6 @@
 /*********************************************************************\
 *                                                                     *
 * epolys.js                                          by Mike Williams *
-* updated to API v3                                  by Larry Ross    *
 *                                                                     *
 * A Google Maps API Extension                                         *
 *                                                                     *
@@ -54,6 +53,7 @@
 * Version 1.3       28-Nov-2008  add: GetPointsAtDistance()           *
 * Version 1.4       12-Jan-2009  fix: GetPointsAtDistance()           *
 * Version 3.0       11-Aug-2010  update to v3                         *
+* Version 57.3		22-Mar-2011	 update
 *                                                                     *
 \*********************************************************************/
 
