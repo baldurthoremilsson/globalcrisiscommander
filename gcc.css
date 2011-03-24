@@ -6,6 +6,8 @@ html {
 body {
     margin: 0;
     padding: 0;
+    height: 100%;
+    width: 100%;
 }
 
 #board {
@@ -21,24 +23,18 @@ body {
     border-right: 2px solid black;
     border-bottom: 2px solid black;
 }
+
+.backlink {
+    color: white;
+    cursor: pointer;
+    display: inline-block;
+}
+
 .dock {
     position: absolute;
     bottom: 0;
     background-image: url('assets/pics/metal012.jpg');
 }
-    .dockitem {
-        margin: 10px 0 10px 10px;
-        position: relative;
-        display: inline-block;
-        background-color: black;
-        border: 2px solid black;
-        -moz-border-radius: 7px;
-        -webkit-border-radius: 7px;
-        -border-radius: 7px;
-    }
-        .dockitem.accident {
-            cursor: pointer;
-        }
 
 .sidebar {
     position: absolute;
@@ -46,20 +42,25 @@ body {
     right: 0;
     background-image: url('assets/pics/metal012.jpg');
 }
-    .sidebaritem {
-            margin: 10px;
-            margin-bottom: 0;
-            position: relative;
-            display: inline-block;
-            background-color: black;
-            border: 2px solid black;
-            -moz-border-radius: 7px;
-            -webkit-border-radius: 7px;
-            -border-radius: 7px;
+
+.infobox {
+    margin: 10px;
+    margin-bottom: 0;
+    position: relative;
+    display: inline-block;
+    background-color: black;
+    border: 2px solid black;
+    -moz-border-radius: 7px;
+    -webkit-border-radius: 7px;
+    -border-radius: 7px;
+}
+    .infobox.station,
+    .infobox.accident {
+        cursor: pointer;
     }
-        .sidebaritem.station {
-            cursor: pointer;
-        }
-        .sidebaritem.unit {
+    .infobox.unit {
             cursor: move;
-        }
+    }
+    .infobox .description {
+        display: none;
+    }
