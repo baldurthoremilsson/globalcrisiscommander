@@ -224,22 +224,22 @@ AnimatedMarker.prototype.initialize = function() {
 //=============== animation functions ======================
 AnimatedMarker.prototype.updatePoly = function(d) 
 {
-	if (poly2.getPath().getLength() > 100) 
+	if (this.poly2.getPath().getLength() > 100) 
 	{
-		poly2=new google.maps.Polyline([polyline.getPath().getAt(lastVertex-1)]);
+		this.poly2=new google.maps.Polyline([this.polyline.getPath().getAt(lastVertex-1)]);
 	}
 
-	if (polyline.GetIndexAtDistance(d) < lastVertex+2) 
+	if (this.polyline.GetIndexAtDistance(d) < lastVertex+2) 
 	{
-		if (poly2.getPath().getLength()>1) 
+		if (this..poly2.getPath().getLength()>1) 
 		{
-			poly2.getPath().removeAt(poly2.getPath().getLength()-1)
+			this.poly2.getPath().removeAt(this.poly2.getPath().getLength()-1)
 		}
-		poly2.getPath().insertAt(poly2.getPath().getLength(),polyline.GetPointAtDistance(d));
+		this.poly2.getPath().insertAt(this.poly2.getPath().getLength(),this.polyline.GetPointAtDistance(d));
 	} 
 	else 
 	{
-		poly2.getPath().insertAt(poly2.getPath().getLength(),endLocation.latlng);
+		this.poly2.getPath().insertAt(this.poly2.getPath().getLength(),endLocation.latlng);
 	}
 }
 
@@ -252,8 +252,8 @@ AnimatedMarker.prototype.updatePoly = function(d)
         }
         var p = polyline.GetPointAtDistance(d);
         this.marker.setPosition(p);
-        updatePoly(d);
-        timerHandle = setTimeout("this.animate("+(d+step)+")", tick);
+        //this.updatePoly(d);
+        timerHandle = setTimeout("this.animate("+(d+this.step)+")", this.tick);
       }
 
 //this needs to be bound to some marker object
