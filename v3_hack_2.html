@@ -259,7 +259,7 @@ AnimatedMarker.prototype.updatePoly = function(d)
 //this needs to be bound to some marker object
 AnimatedMarker.prototype.startAnimation = function() {
         eol=polyline.Distance();
-        poly2 = new google.maps.Polyline({path: [polyline.getPath().getAt(0)], strokeColor:"#0000FF", 	
+        this.poly2 = new google.maps.Polyline({path: [this.polyline.getPath().getAt(0)], strokeColor:"#0000FF", 	
 				strokeWeight:10});
         setTimeout("this.animate(50)",2000);  // Allow time for the initial map display
 }
