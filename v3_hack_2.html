@@ -21,7 +21,7 @@ function initialize()
 {
 	var x = new AnimatedMarker();
 	x.initialize();
-	x.calcRoute(48.861815,2.343256,48.855801,2.324073, x);
+	x.calcRoute(48.861815,2.343256,48.855801,2.324073);
 	console.log();
 }
 
@@ -50,18 +50,20 @@ function AnimatedMarker()
   this.stepnum=0;
   this.speed = "";
   this.lastVertex = 1;
+}
 
   //possible improvements
 	var polyLinest = []; //each route
 	var markers = [];	//each marker
 	var stepsArray = [] //array of step arrays ?
 
-this.createMarker = function(latlng, label, html) {
+AnimatedMarker.prototype.createMarker = function(latlng, label, html) 
+{
 	//parametrize later
 	var iconImage = "assets/pics/police_32.png";
     var marker = new google.maps.Marker({
         position: latlng,
-        map: map,
+        map: this.map,
         title: label,
 		icon: iconImage,
         zIndex: Math.round(latlng.lat()*-100000)<<5
@@ -73,7 +75,7 @@ this.createMarker = function(latlng, label, html) {
 }
 
 
-this.initialize = function() {
+AnimatedMarker.prototype.initialize = function() {
   infowindow = new google.maps.InfoWindow(
     { 
       size: new google.maps.Size(150,50)
@@ -123,7 +125,7 @@ this.initialize = function() {
 	
 	//should have parameters for loc1, loc2 perhaps
 	// !! __ !! also we need to make it so we can add two markers and animate them on the same map !!__!!
-	this.calcRoute = function(locA_1, locA_2, locB_1, locB_2, obj){
+	AnimatedMarker.prototype.calcRoute = function(locA_1, locA_2, locB_1, locB_2){
 
 		if (this.timerHandle) { 
 			clearTimeout(timerHandle); 
@@ -199,7 +201,7 @@ this.initialize = function() {
             			startLocation.latlng = legs[i].start_location;
             			startLocation.address = legs[i].start_address;
             			// marker = google.maps.Marker({map:map,position: startLocation.latlng});
-            this.marker = obj.createMarker(legs[i].start_location,"start",legs[i].start_address,"green");
+            this.marker = this.createMarker(legs[i].start_location,"start",legs[i].start_address,"green");
           	}
           endLocation.latlng = legs[i].end_location;
           endLocation.address = legs[i].end_address;
@@ -212,13 +214,13 @@ this.initialize = function() {
           }
         }
 
-	obj.startAnimation(obj);
+	this.startAnimation();
     }                                                    
  });
 }
 
 //=============== animation functions ======================
-this.updatePoly = function(d) 
+AnimatedMarker.prototype.updatePoly = function(d) 
 {
 	if (poly2.getPath().getLength() > 100) 
 	{
@@ -241,7 +243,7 @@ this.updatePoly = function(d)
 
 
 	  //this needs to be bound to some marker object
-       this.animate = function(d, obj) {
+       this.animate = function(d) {
         if (d>eol) {
           marker.setPosition(endLocation.latlng);
           return;
@@ -249,17 +251,17 @@ this.updatePoly = function(d)
         var p = polyline.GetPointAtDistance(d);
         marker.setPosition(p);
         updatePoly(d);
-        timerHandle = setTimeout("obj.animate("+(d+step)+",obj)", tick);
+        timerHandle = setTimeout("animate("+(d+step)+")", tick);
       }
 
 //this needs to be bound to some marker object
-this.startAnimation = function(obj) {
+AnimatedMarker.prototype.startAnimation = function() {
         eol=polyline.Distance();
         poly2 = new google.maps.Polyline({path: [polyline.getPath().getAt(0)], strokeColor:"#0000FF", 	
 				strokeWeight:10});
-        setTimeout("obj.animate(50,obj)",2000);  // Allow time for the initial map display
+        setTimeout("animate(50)",2000);  // Allow time for the initial map display
 }
-}
+
 
 
 //=============== ~animation funcitons =====================
