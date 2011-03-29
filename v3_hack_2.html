@@ -106,13 +106,13 @@ AnimatedMarker.prototype.initialize = function() {
     directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
 	
 	//This probably needs some work
-    polyline = new google.maps.Polyline({
+    this.polyline = new google.maps.Polyline({
 	path: [],
 	strokeColor: '#FF0000',
 	strokeWeight: 0,
 	strokeOpacity: 1.0
     });
-    poly2 = new google.maps.Polyline({
+    this.poly2 = new google.maps.Polyline({
 	path: [],
 	strokeColor: '#FF0000',
 	strokeWeight: 0,
@@ -138,16 +138,16 @@ AnimatedMarker.prototype.initialize = function() {
 		*/
 		
 		
-		polyline.setMap(null);
-		poly2.setMap(null);
-    	polyline = new google.maps.Polyline({
+		this.polyline.setMap(null);
+		this.poly2.setMap(null);
+    	this.polyline = new google.maps.Polyline({
 			path: [],
 			strokeColor: '#FF0000',
 			strokeWeight: 0,
 			strokeOpacity: 1.0
     	});
     	
-		poly2 = new google.maps.Polyline({
+		this.poly2 = new google.maps.Polyline({
 			path: [],
 			strokeColor: '#FF0000',
 			strokeWeight: 0,
@@ -211,7 +211,7 @@ AnimatedMarker.prototype.initialize = function() {
           for (j=0;j<steps.length;j++) {
             var nextSegment = steps[j].path;
             for (k=0;k<nextSegment.length;k++) {
-              polyline.getPath().push(nextSegment[k]);
+              self.polyline.getPath().push(nextSegment[k]);
             }
           }
         }
@@ -258,7 +258,7 @@ AnimatedMarker.prototype.updatePoly = function(d)
 
 //this needs to be bound to some marker object
 AnimatedMarker.prototype.startAnimation = function() {
-        eol=polyline.Distance();
+        eol=this.polyline.Distance();
         this.poly2 = new google.maps.Polyline({path: [this.polyline.getPath().getAt(0)], strokeColor:"#0000FF", 	
 				strokeWeight:10});
         setTimeout("this.animate(50)",2000);  // Allow time for the initial map display
