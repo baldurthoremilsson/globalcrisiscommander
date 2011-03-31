@@ -1,3 +1,11 @@
+// Array Remove - By John Resig (MIT Licensed)
+// http://ejohn.org/blog/javascript-array-remove/
+Array.prototype.remove = function(from, to) {
+  var rest = this.slice((to || from) + 1 || this.length);
+  this.length = from < 0 ? this.length + from : from;
+  return this.push.apply(this, rest);
+};
+
 // http://plugins.jquery.com/project/autocenter
 (function($){
      $.fn.extend({
@@ -178,6 +186,9 @@ var gcc = {
 	}
 };
 
+UNIT_INTERVAL = 1;
+UNIT_UPDATE = 20;
+
 // Game
 gcc.Game = function(id) {
     var self = this;
@@ -222,6 +233,11 @@ gcc.Game = function(id) {
     $(window).resize();
     
     this.currentLevel = 0;
+    this.directionsService = new google.maps.DirectionsService();
+    
+    this.running = false;
+    
+    this.updateUnits();
 };
 
     gcc.Game.prototype = {
@@ -242,7 +258,9 @@ gcc.Game = function(id) {
         
         
         startLevel: function(level) {
-        	var messagebox;
+        	var self = this,
+        		messagebox,
+        		i;
         	
         	$('.infobox', this.DOM.dock).remove();
         	$('.infobox', this.DOM.sidebar).remove();
@@ -252,21 +270,27 @@ gcc.Game = function(id) {
         	
             this.accidents = [];
             this.stations = [];
+            this.units = [];
             
             this.map.setCenter(new google.maps.LatLng(level.location.lat, level.location.long));
             
-            for(i in level.accidents)
-                this.addAccident(level.accidents[i]);
+            for(i = 0; i < level.accidents.length; i++)
+                this.addAccident(new gcc.Accident(level.accidents[i]));
             
-            for(i in level.stations)
-                this.addStation(level.stations[i]);
+            for(i = 0; i < level.stations.length; i++)
+                this.addStation(new gcc.Station(level.stations[i]));
             
         	messagebox = $('<div title="Level ' + (this.currentLevel+1) + ": " + level.description.title + '"><p>' + level.description.description + '</p></div>');
         	messagebox.dialog({
         		modal: true,
         		draggable: false,
-        		resizeable: false
+        		resizeable: false,
+        		close: function(event, ui) {
+        			self.play();
+        		}
         	});
+        	
+        	this.pause();
         },
         nextLevel: function() {
         	var nextlvl = this.currentLevel % gcc.levels.length;
@@ -275,44 +299,74 @@ gcc.Game = function(id) {
         addUnit: function(unit) {
         },
         addAccident: function(accident) {
-            var acc = new gcc.Accident(accident);
-            this.accidents.push(acc);
+            this.accidents.push(accident);
             
-            acc.marker.setMap(this.map);
-            this.DOM.dock.append(acc.DOM);
+            accident.marker.setMap(this.map);
+            this.DOM.dock.append(accident.DOM);
         },
         addStation: function(station) {
-            var st = new gcc.Station(station);
-            this.stations.push(st);
+        	var i;
+        	
+            this.stations.push(station);
             
-            st.marker.setMap(this.map);
-            this.DOM.sidebar.append(st.DOM);
+            station.marker.setMap(this.map);
+            this.DOM.sidebar.append(station.DOM);
+            
+            for(i = 0; i < station.units.length; i++)
+            	this.addUnit(station.units[i]);
+        },
+        addUnit: function(unit) {
+        	this.units.push(unit);
         },
         pause: function() {
+        	this.running = false;
         },
         play: function() {
+        	this.running = true;
         },
         
         displayAccidents: function() {
-            var dock = this.DOM.dock;
+            var dock = this.DOM.dock,
+            	i;
             dock.children().hide();
             
-            for(i in this.accidents)
+            for(i = 0; i < this.accidents.length; i++)
                 this.accidents[i].DOM.displayItem();
         },
         displayStations: function() {
-            var sidebar = this.DOM.sidebar;
+            var sidebar = this.DOM.sidebar,
+            	i;
             sidebar.children().hide();
             
-            for(i in this.stations)
+            for(i = 0; i < this.stations.length; i++)
                 this.stations[i].DOM.displayItem();
+        },
+        updateUnits: function() {
+        	var self = this,
+        		i,
+        		unit;
+        	
+            setTimeout(function() {
+            	self.updateUnits();
+            }, UNIT_UPDATE);
+        	if(!this.running)
+        		return;
+        	
+        	for(i = 0; i < this.units.length; i++) {
+        		unit = this.units[i];
+    			if(unit.marker.isVisible())
+    				unit.marker.move();
+        	}
         },
         checkWinningConditions: function() {
         	var incidents,
-        		messagebox;
-        	for(i in this.accidents) {
+        		messagebox,
+        		i,
+        		j;
+        	
+        	for(i = 0; i < this.accidents.length; i++) {
         		incidents = this.accidents[i].incidents;
-        		for(j in incidents)
+        		for(j = 0; j < incidents.length; j++)
         			if(!incidents[j].resolved)
         				return;
         	}
@@ -332,13 +386,14 @@ gcc.Game = function(id) {
 
 // Accidents
 gcc.Accident = function(accident) {
-    var self = this;
+    var self = this,
+    	i;
     
     this.location = new google.maps.LatLng(accident.location.lat, accident.location.long);
     this.type = accident.type;
     this.incidents = [];
     
-    for(i in accident.incidents) {
+    for(i = 0; i < accident.incidents.length; i++) {
     	this.incidents.push(new gcc.Incident(this, accident.incidents[i]));
     }
     
@@ -360,20 +415,22 @@ gcc.Accident = function(accident) {
 
     gcc.Accident.prototype = {
         displayIncidents: function() {
-            var dock = gcc.game.DOM.dock;
+            var dock = gcc.game.DOM.dock,
+            	i;
+            
             dock.children().hide();
             gcc.game.DOM.dockLink.displayItem();
-            for(i in this.incidents)
+            for(i = 0; i < this.incidents.length; i++)
                 this.incidents[i].DOM.displayItem();
             
             return false;
         }
     };
 
-gcc.Station = function(station) {
+gcc.Station = function(station, game) {
     var self = this,
         description,
-        unit;
+        unit,
         i;
     
     this.location = new google.maps.LatLng(station.location.lat, station.location.long);
@@ -394,16 +451,21 @@ gcc.Station = function(station) {
     });
     
     this.units = [];
-    for(i = 0; i < station.units; i++)
-        this.units.push(new gcc.Unit(this, station.unittype));
+    for(i = 0; i < station.units; i++) {
+    	var unit = new gcc.Unit(this, station.unittype);
+        this.units.push(unit);
+        gcc.game.addUnit(unit);
+    }
 };
 
     gcc.Station.prototype = {
         displayUnits: function() {
-    		var sidebar = gcc.game.DOM.sidebar;
+    		var sidebar = gcc.game.DOM.sidebar,
+    			i;
+    		
             sidebar.children().hide();
             gcc.game.DOM.sidebarLink.displayItem();
-            for(i in this.units)
+            for(i = 0; i < this.units.length; i++)
                 this.units[i].DOM.displayItem();
             
             return false;
@@ -422,13 +484,16 @@ gcc.Incident = function(accident, incident) {
     	.data("incident", this)
     	.droppable({
     		accept: function(draggable) {
-    			var accepts = self.acceptsUnits[self.type];
-    			for(i in accepts)
+    			var accepts = self.acceptsUnits[self.type],
+    				i;
+    			for(i = 0; i < accepts.length; i++)
     				if(draggable.hasClass(accepts[i]))
     					return true;
     			return false;
     		},
     		drop: function(event, ui) {
+    			var unit = ui.draggable.data('unit');
+    			unit.marker.goTo(self.accident.location);
     			$(this).css('background-color', "green");
     			$(this).data("incident").resolved = true;
     			gcc.game.checkWinningConditions();
@@ -452,18 +517,99 @@ gcc.Incident = function(accident, incident) {
 
 gcc.Unit = function(station, type) {
     var self = this;
-    
+
+    this.station = station;
     this.type = type;
 
     this.DOM = gcc.getInfobox("sidebar", "unit " + this.type, gcc.images.units[this.type])
     	.draggable(this.dragOpts)
-    	.hide();
+    	.hide()
+    	.data('unit', this);
     gcc.game.DOM.sidebar.append(this.DOM);
+    
+    this.marker = new gcc.AnimatedMarker(this, this.station.location);
 };
 	gcc.Unit.prototype = {
 		dragOpts: {
 			containment: "html",
 			revert: true
+		}
+	};
+
+gcc.AnimatedMarker = function(unit, startPos) {
+	this.unit = unit;
+	this.marker = new google.maps.Marker({
+        position: startPos,
+        map: gcc.game.map, // FIXME add to map in gcc.game.addUnit
+		icon: "assets/pics/police_32.png", // FIXME correct image
+		visible: false
+    });
+	this.polyline = new google.maps.Polyline({
+		path: [startPos],
+		strokeColor: '#FF0000',
+		strokeWeight: 0,
+		strokeOpacity: 1.0
+	});
+	this.directionsResults = null;
+	this.running = false;
+	this.steps = [];
+};
+	gcc.AnimatedMarker.prototype = {
+		goTo: function(destPos) {
+			var self = this,
+				request = {
+					origin: this.marker.getPosition(),
+					destination: destPos,
+					travelMode: google.maps.DirectionsTravelMode.DRIVING
+				};
+			gcc.game.directionsService.route(request, function(response, status){
+                if (status != google.maps.DirectionsStatus.OK)
+                	return;
+                
+                var legs = response.routes[0].legs,
+                	overview_path = response.routes[0].overview_path,
+                	steps,
+                	i,
+                	j,
+                	k,
+                	count = 0;
+                
+                self.directionsResults = response;
+                for(i=0; i < legs.length; i++) {
+                    steps = legs[i].steps;
+                    for (j=0; j < steps.length; j++) {
+                        var nextSegment = steps[j].path;
+                        for (k=0;k<nextSegment.length;k++) {
+                            self.polyline.getPath().push(nextSegment[k]);
+                            count++;
+                        }
+                    }
+                }
+                self.steps = self.polyline.GetPointsAtDistance(UNIT_INTERVAL);
+                self.polyline.getPath().clear();
+                for(i=0; i < self.steps.length; i++)
+                	self.polyline.getPath().push(self.steps[i]);
+                self.running = true;
+			});
+			this.marker.setVisible(true);
+		},
+		move: function() {
+			var path = this.polyline.getPath(),
+				pos = path.getAt(0);
+			if(!this.running)
+				return;
+			
+			if(pos) {
+				this.marker.setPosition(pos);
+				path.removeAt(0);
+			} else {
+				this.marker.setVisible(false);
+				this.running = false;
+			}
+			return pos;
+		},
+		isVisible: function() {
+			return this.marker.getVisible();
 		}
 	};
 
