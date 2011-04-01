@@ -143,6 +143,11 @@ $(document).ready(function(){
 
 	var audioPlaylist = new Playlist("1", [
 		{
+			name:"Brave Heart",
+			mp3:"assets/songs/BraveHeart.mp3",
+			oga:"assets/songs/BraveHeart.ogg"
+		},
+		{
 			name:"Tempered Song",
 			mp3:"http://www.jplayer.org/audio/mp3/Miaow-01-Tempered-song.mp3",
 			oga:"http://www.jplayer.org/audio/ogg/Miaow-01-Tempered-song.ogg"
@@ -209,7 +214,7 @@ $(document).ready(function(){
 			$(this).jPlayer("pauseOthers");
 		},
 		swfPath: "js",
-		supplied: "oga, mp3"
+		supplied: "mp3,oga"
 	});
 });
 //]]>
