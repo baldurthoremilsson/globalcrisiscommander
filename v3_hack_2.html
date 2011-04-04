@@ -76,11 +76,6 @@ AnimatedMarker.prototype.createMarker = function(latlng, label, html,icon)
 
 
 AnimatedMarker.prototype.initialize = function() {
-  infowindow = new google.maps.InfoWindow(
-    { 
-      size: new google.maps.Size(150,50)
-    });
-
     // Instantiate a directions service.
     directionsService = new google.maps.DirectionsService();
     
@@ -182,43 +177,43 @@ AnimatedMarker.prototype.initialize = function() {
 	        	travelMode: travelMode
 	    	};
 
-		// Route the directions and pass the response to a
-		// function to create markers for each step.
-  		directionsService.route(request, function(response, status) {
-			//var self = this;
-			//document.write(self);
-    		if (status == google.maps.DirectionsStatus.OK){
-				directionsDisplay.setDirections(response);
+            // Route the directions and pass the response to a
+            // function to create markers for each step.
+            directionsService.route(request, function(response, status) {
+                //var self = this;
+                //document.write(self);
+                if (status == google.maps.DirectionsStatus.OK) {
+                    directionsDisplay.setDirections(response);
 
-        		//var bounds = new google.maps.LatLngBounds();
-        		var route = response.routes[0];
-        		startLocation = new Object();
-        		endLocation = new Object();
+                    //var bounds = new google.maps.LatLngBounds();
+                    var route = response.routes[0];
+                    startLocation = new Object();
+                    endLocation = new Object();
 
-        		// For each route, display summary information.
-				var path = response.routes[0].overview_path;
-				var legs = response.routes[0].legs;
-        		for (i=0;i<legs.length;i++) {
-          			if (i == 0) { 
-            			startLocation.latlng = legs[i].start_location;
-            			startLocation.address = legs[i].start_address;
-            			// marker = google.maps.Marker({map:map,position: startLocation.latlng});
-            self.marker = self.createMarker(legs[i].start_location,"start",legs[i].start_address,"green");
-          	}
-          endLocation.latlng = legs[i].end_location;
-          endLocation.address = legs[i].end_address;
-          var steps = legs[i].steps;
-          for (j=0;j<steps.length;j++) {
-            var nextSegment = steps[j].path;
-            for (k=0;k<nextSegment.length;k++) {
-              self.polyline.getPath().push(nextSegment[k]);
-            }
-          }
-        }
+                    // For each route, display summary information.
+                    var path = response.routes[0].overview_path;
+                    var legs = response.routes[0].legs;
+                    for (i=0;i<legs.length;i++) {
+                        if (i == 0) { 
+                        startLocation.latlng = legs[i].start_location;
+                        startLocation.address = legs[i].start_address;
+                        // marker = google.maps.Marker({map:map,position: startLocation.latlng});
+                        self.marker = self.createMarker(legs[i].start_location,"start",legs[i].start_address,"green");
+                        }
+                        endLocation.latlng = legs[i].end_location;
+                        endLocation.address = legs[i].end_address;
+                        var steps = legs[i].steps;
+                        for (j=0;j<steps.length;j++) {
+                            var nextSegment = steps[j].path;
+                            for (k=0;k<nextSegment.length;k++) {
+                                self.polyline.getPath().push(nextSegment[k]);
+                            }
+                        }
+                    }
 
-	self.startAnimation();
-    }                                                    
- });
+                    self.startAnimation();
+                }                                                    
+            });
 }
 
 //=============== animation functions ======================
