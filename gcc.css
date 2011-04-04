@@ -32,7 +32,7 @@ body {
 
 .dock {
     position: absolute;
-    bottom: 0;
+    bottom: 10;
     background-image: url('assets/pics/metal012.jpg');
 }
 
@@ -64,3 +64,5 @@ body {
     .infobox .description {
         display: none;
     }
+
+ 

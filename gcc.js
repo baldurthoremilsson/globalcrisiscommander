@@ -92,6 +92,55 @@ Array.prototype.remove = function(from, to) {
 
 var gcc = {
     levels: [
+             //level 2
+             {
+                 location: {lat: 34.154769, long: -118.345413},
+                 accidents: [
+                     {
+                         location: {lat: 34.154769, long: -118.345413},
+                         type: "robbery",
+                         incidents: [
+                             {
+                             	type: "robber",
+                             	time: 30.0
+                             },
+                             {
+                             	type: "robber",
+                             	time: 30.0
+                             },
+                             {
+                             	type: "robber",
+                             	time: 30.0
+                             }
+                         ]
+                     }
+                 ],
+                 stations: [
+                     {
+                         type: "policestation",
+                         location: {lat: 34.154254, long: -118.336015},
+                         units: 1,
+                         unittype: "policecar"
+                     },
+                     {
+                         type: "policestation",
+                         location: {lat: 34.159901, long: -118.345091},
+                         units: 2,
+                         unittype: "policecar"
+                     },
+                     {
+                         type: "hospital",
+                         location: {lat: 34.159084, long: -118.338954},
+                         units: 1,
+                         unittype: "ambulance"
+                     }
+                 ],
+                 description: {
+                     title: "Bank robbery",
+                     description: "Bank robbery in progress, at the Bank of America. 2x suspects, heavily armed and wearing body armor, 1x person has been shot, status unknown. Extreme caution advised.... also my money's there so you need to get that back."
+                 }
+             },
+         //level 1
         {
             location: {lat: 34.435169, long: -119.797239},
             accidents: [
@@ -138,7 +187,8 @@ var gcc = {
                 title: "Car accident",
                 description: "There has been a three car crash on Hollister Avenue, Santa Barbara. Two people are injured, one of which is trapped in their car. Traffic is jammed near the accident."
             }
-        }
+        },
+       
     ],
     images: {
 		stations: {
