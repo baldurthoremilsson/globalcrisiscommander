@@ -335,8 +335,8 @@ gcc.Game = function(id) {
         	this.pause();
         },
         nextLevel: function() {
-        	var nextlvl = this.currentLevel % gcc.levels.length;
-        	this.startLevel(gcc.levels[nextlvl]);
+        	this.currentLevel = (this.currentLevel+1) % gcc.levels.length;
+        	this.startLevel(gcc.levels[this.currentLevel]);
         },
         addUnit: function(unit) {
         },
