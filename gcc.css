@@ -65,4 +65,65 @@ body {
         display: none;
     }
 
+
+#controlbox {
+	/*width: 180px;*/
+	background: url('assets/pics/languagebox_gradient.png');
+	background-repeat: repeat-x;
+	background-position: bottom;
+	background-color: white;
+	position: absolute;
+	top: 0;
+	left: 10px;
+	-moz-box-shadow: 0 0 5px #888;
+	-webkit-box-shadow: 0 0 5px #888;
+	box-shadow: 0 0 5px #888;
+	padding: 13px 5px 5px 5px;
+	z-index: 1;
+}
+
+/*#controlboxCompressed { width: 180px; }*/
+	
+.cbc {
+	float: left;
+	margin: 2px;
+}
+
+#controlbox img {
+	position: absolute;
+	top: 4px;
+	right: 4px;
+	}
+	
+	#languagebox .list {
+		padding: 4px;
+		background-image: url('assets/pics/languagebox_inner_gradient.png');
+		background-position: bottom;
+		background-repeat: repeat-x;
+		background-color: white;
+		border: 1px solid #C5C4C2;
+		width: 160px;
+		position: relative;
+		}
+	#language-button {
+			cursor: hand;
+			cursor: pointer;
+		}
+	#languagebox img {
+			position: absolute;
+			top: 4px;
+			right: 4px;
+		}
+	#languagebox img.arrow-up {
+			display: none;
+		}
+	#languagebox ul {
+			margin: 0;
+			padding: 0 0 5px 5px;
+			list-style: none;
+			display: none;
+		}
+	#languagebox ul li {
+			margin-top: 8px;
+		}
  
