@@ -28,7 +28,23 @@ body {
     color: white;
     cursor: pointer;
     display: inline-block;
+    opacity: 0.8;
+    height: 45px;
+    width: 45px;
 }
+    .backlink:hover {
+        opacity: 1.0;
+    }
+    .dock .backlink {
+        float: left;
+        margin-top: 57px;
+        margin-left: 10px;
+    }
+    .sidebar .backlink {
+        float: left;
+        margin-left: 57px;
+        margin-top: 10px;
+    }
 
 .dock {
     position: absolute;

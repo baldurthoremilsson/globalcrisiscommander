@@ -224,6 +224,12 @@ var gcc = {
 			firetruck: "assets/pics/firetruck_128.png",
 			policecar: "assets/pics/policecar_128.png",
 			ambulance: "assets/pics/ambulance_128.png"
+		},
+		graphic: {
+			arrowUp: "assets/pics/arrow_up.png",
+			arrowDown: "assets/pics/arrow_left.png",
+			arrowRight: "assets/pics/arrow_right.png",
+			arrowLeft: "assets/pics/arrow_left.png"
 		}
 	}
 };
@@ -288,10 +294,10 @@ gcc.Game = function(id) {
             map: $('<div class="map_canvas"></div>'),
             dock: $('<div class="dock"></div>'),
             sidebar: $('<div class="sidebar"></div>'),
-            dockLink: $('<div class="backlink">Back</div>'),
-            sidebarLink: $('<div class="backlink">Back</div>'),
-            controlBox: controlBoxObject.getControlBox(),
-			},
+            dockLink: $('<div class="backlink"><img src="' + gcc.images.graphic.arrowLeft + '" alt="Back"/></div>'),
+            sidebarLink: $('<div class="backlink"><img src="' + gcc.images.graphic.arrowUp + '" alt="Back"/></div>'),
+            controlBox: controlBoxObject.getControlBox()
+		},
         mapOptions: {
             zoom: 16,
             center: new google.maps.LatLng(0, 0),
