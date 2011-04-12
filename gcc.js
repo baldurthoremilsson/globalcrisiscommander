@@ -252,6 +252,7 @@ gcc.Game = function(id) {
     this.DOM.sidebar.append(this.DOM.sidebarLink);
     
     this.DOM.board
+		.append(this.DOM.controlBox)
         .append(this.DOM.map)
         .append(this.DOM.dock)
         .append(this.DOM.sidebar);
@@ -288,8 +289,9 @@ gcc.Game = function(id) {
             dock: $('<div class="dock"></div>'),
             sidebar: $('<div class="sidebar"></div>'),
             dockLink: $('<div class="backlink">Back</div>'),
-            sidebarLink: $('<div class="backlink">Back</div>')
-        },
+            sidebarLink: $('<div class="backlink">Back</div>'),
+            controlBox: controlBoxObject.getControlBox(),
+			},
         mapOptions: {
             zoom: 16,
             center: new google.maps.LatLng(0, 0),
@@ -298,6 +300,7 @@ gcc.Game = function(id) {
         MENU_SIZE: 150,
         INFOBOX_RATIO: 0.75,
         
+		/* Methods for the control box, CB is shorthand for Control Box */
         
         startLevel: function(level) {
         	var self = this,
@@ -693,7 +696,9 @@ gcc.getInfobox = function(type, className, img) {
 	return infoBox;
 };
 
+
 $(function() {
     gcc.game = new gcc.Game("board");
     gcc.game.startLevel(gcc.levels[0]);
+	$('#controlbox').click(function() {controlBoxObject.click();});
 });
