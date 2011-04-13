@@ -72,7 +72,7 @@
 	});
 })(jQuery);
 
-// homebrew
+// Make sure items have correct display value in their css
 (function($) {
 	$.fn.extend({
 		displayItem: function() {
@@ -241,6 +241,10 @@ UNIT_UPDATE = 20;
 gcc.Game = function(id) {
     var self = this;
     
+    this.time = 0;
+    this.lastUpdate = new Date().getTime();
+    this.timedEvents = [];
+    
     this.DOM.board = $("#" + id);
     
     this.DOM.dockLink
@@ -286,6 +290,9 @@ gcc.Game = function(id) {
     
     this.running = false;
     
+    setInterval(function() {
+    	self.update();
+    }, 30);
     this.updateUnits();
 };
 
@@ -408,6 +415,31 @@ gcc.Game = function(id) {
     			if(unit.marker.isVisible())
     				unit.marker.move();
         	}
+        },
+        update: function() {
+        	var currTime = new Date().getTime(),
+        		i,
+        		event;
+        	if(this.running)
+        		this.time += currTime - this.lastUpdate;
+        	this.lastUpdate = currTime;
+        	
+        	while(this.timedEvents.length != 0) {
+        		event = this.timedEvents[0];
+        		if(event.time > this.time)
+        			break;
+        		event.closure.call(window);
+        		this.timedEvents.shift();
+        	}
+        },
+        addTimedEvent: function(closure, delay) {
+        	this.timedEvents.push({
+        		time: this.time + delay,
+        		closure: closure
+        	});
+        	this.timedEvents.sort(function(a,b) {
+        		return a.time - b.time;
+        	});
         },
         checkWinningConditions: function() {
         	var incidents,
