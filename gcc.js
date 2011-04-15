@@ -72,7 +72,7 @@
 	});
 })(jQuery);
 
-// homebrew
+// Make sure items have correct display value in their css
 (function($) {
 	$.fn.extend({
 		displayItem: function() {
@@ -186,25 +186,28 @@ var gcc = {
 		stations: {
 			firestation: {
 				sidebar: "assets/pics/firestation-icon.png",
-				marker: "assets/pics/firestation-icon.png"
+				marker: "assets/pics/firestation-icon.png",
+				aniUnitMarker : "assets/pics/fire_escape_32.png"
 			},
 			policestation: {
 				sidebar: "assets/pics/policestation-icon.png",
-				marker: "assets/pics/policestation-icon.png"
+				marker: "assets/pics/policestation-icon.png",
+				aniUnitMarker: "assets/pics/police_32.png"
 			},
 			hospital: {
 				sidebar: "assets/pics/hospital-icon.png",
-				marker: "assets/pics/hospital-icon.png"
+				marker: "assets/pics/hospital-icon.png",
+				aniUnitMarker: "assets/pics/ambulance_32.png"
 			}
 		},
 		accidents: {
 			fire: {
 				dock: "assets/pics/fire-icon.png",
-				marker: "assets/pics/fire-icon.png"
+				marker: "assets/pics/fire-icon.png",
 			},
 			carcrash: {
 				dock: "assets/pics/carcrash-icon.png",
-				marker: "assets/pics/carcrash-icon.png"
+				marker: "assets/pics/carcrash-icon.png",
 			},
 			robbery: {
 				dock: "assets/pics/robbery-icon.png",
@@ -224,6 +227,24 @@ var gcc = {
 			firetruck: "assets/pics/firetruck_128.png",
 			policecar: "assets/pics/policecar_128.png",
 			ambulance: "assets/pics/ambulance_128.png"
+		},
+		graphic: {
+			arrowUp: "assets/pics/arrow_up.png",
+			arrowDown: "assets/pics/arrow_left.png",
+			arrowRight: "assets/pics/arrow_right.png",
+			arrowLeft: "assets/pics/arrow_left.png"
+		},
+		aniMarkers: {
+			policecar: {
+				marker: "assets/pics/policecar_32.png",
+			},
+			firetruck : {
+				marker: "assets/pics/fire_escape_32.png",
+			},
+			ambulance:
+			{
+				marker: "assets/pics/ambulance_32.png",
+			}
 		}
 	}
 };
@@ -234,6 +255,10 @@ UNIT_UPDATE = 20;
 // Game
 gcc.Game = function(id) {
     var self = this;
+    
+    this.time = 0;
+    this.lastUpdate = new Date().getTime();
+    this.timedEvents = [];
     
     this.DOM.board = $("#" + id);
     
@@ -280,6 +305,9 @@ gcc.Game = function(id) {
     
     this.running = false;
     
+    setInterval(function() {
+    	self.update();
+    }, 30);
     this.updateUnits();
 };
 
@@ -288,10 +316,11 @@ gcc.Game = function(id) {
             map: $('<div class="map_canvas"></div>'),
             dock: $('<div class="dock"></div>'),
             sidebar: $('<div class="sidebar"></div>'),
-            dockLink: $('<div class="backlink">Back</div>'),
-            sidebarLink: $('<div class="backlink">Back</div>'),
-            controlBox: controlBoxObject.getControlBox(),
-			},
+            dockLink: $('<div class="backlink"><img src="' + gcc.
+.graphic.arrowLeft + '" alt="Back"/></div>'),
+            sidebarLink: $('<div class="backlink"><img src="' + gcc.images.graphic.arrowUp + '" alt="Back"/></div>'),
+            controlBox: controlBoxObject.getControlBox()
+		},
         mapOptions: {
             zoom: 16,
             center: new google.maps.LatLng(0, 0),
@@ -403,6 +432,31 @@ gcc.Game = function(id) {
     				unit.marker.move();
         	}
         },
+        update: function() {
+        	var currTime = new Date().getTime(),
+        		i,
+        		event;
+        	if(this.running)
+        		this.time += currTime - this.lastUpdate;
+        	this.lastUpdate = currTime;
+        	
+        	while(this.timedEvents.length != 0) {
+        		event = this.timedEvents[0];
+        		if(event.time > this.time)
+        			break;
+        		event.closure.call(window);
+        		this.timedEvents.shift();
+        	}
+        },
+        addTimedEvent: function(closure, delay) {
+        	this.timedEvents.push({
+        		time: this.time + delay,
+        		closure: closure
+        	});
+        	this.timedEvents.sort(function(a,b) {
+        		return a.time - b.time;
+        	});
+        },
         checkWinningConditions: function() {
         	var incidents,
         		messagebox,
@@ -447,7 +501,6 @@ gcc.Accident = function(accident) {
     	.click(function() {
     		self.displayIncidents();
     	});
-    
     this.marker = new google.maps.Marker({
         position: this.location,
         icon: gcc.images.accidents[this.type].marker
@@ -582,11 +635,16 @@ gcc.Unit = function(station, type) {
 	};
 
 gcc.AnimatedMarker = function(unit, startPos) {
+	var self = this;
 	this.unit = unit;
+	elIcon = gcc.images.aniMarkers[unit.type].marker;
+	console.log();
 	this.marker = new google.maps.Marker({
         position: startPos,
         map: gcc.game.map, // FIXME add to map in gcc.game.addUnit
-		icon: "assets/pics/police_32.png", // FIXME correct image
+
+		//this is how it should work, i just don't get why it doesn't
+		icon: elIcon.toString(), // FIXME correct image
 		visible: false
     });
 	this.polyline = new google.maps.Polyline({
