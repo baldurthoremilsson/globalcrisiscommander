@@ -51,23 +51,23 @@ var controlBoxObject =
 		if(!this.is_expd)
 		{
 			this.width = $('#controlbox').css('width');
-			$('#controlbox img.arrrow-down').fadeOut();
-			$('#controlbox #controlboxCompressed').fadeOut();
+			$('img.arrrow-down').fadeOut();
+			$('#controlbox #controlboxCompressed').fadeOut('fast');
 			$('#controlbox').animate(
 				{width: 500, height: 50},
-				1000,
-				function() { $('#controlbox #controlboxExpanded').fadeIn(); }
+				200,
+				function() { $('#controlbox #controlboxExpanded').fadeIn('fast'); }
 			);
 			this.is_expd = true;
 			return;
 		}
 				
 		$('#controlbox img.arrrow-down').fadeOut();
-		$('#controlbox #controlboxExpanded').fadeOut();
+		$('#controlbox #controlboxExpanded').fadeOut('fast');
 		$('#controlbox').animate(
 			{width: 190, height: 30},
-			1000,
-			function() { $('#controlbox #controlboxCompressed').fadeIn(); }
+			200,
+			function() { $('#controlbox #controlboxCompressed').fadeIn('fast'); }
 			);
 
 		this.is_expd = false;
