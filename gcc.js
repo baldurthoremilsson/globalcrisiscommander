@@ -187,7 +187,7 @@ var gcc = {
 			firestation: {
 				sidebar: "assets/pics/firestation-icon.png",
 				marker: "assets/pics/firestation-icon.png",
-				aniUnitMarker : "assets/pics/fire_escape_32.png"
+				aniUnitMarker : "assets/pics/firetruck_32.png"
 			},
 			policestation: {
 				sidebar: "assets/pics/policestation-icon.png",
@@ -234,17 +234,11 @@ var gcc = {
 			arrowRight: "assets/pics/arrow_right.png",
 			arrowLeft: "assets/pics/arrow_left.png"
 		},
-		aniMarkers: {
-			policecar: {
-				marker: "assets/pics/policecar_32.png",
-			},
-			firetruck : {
-				marker: "assets/pics/fire_escape_32.png",
-			},
-			ambulance:
-			{
-				marker: "assets/pics/ambulance_32.png",
-			}
+		aniMarkers:
+		{
+			policecar: "assets/pics/police_32.png",
+			ambulance: "assets/pics/ambulance_32.png",
+			firetruck: "assets/pics/firetruck_32.png"
 		}
 	}
 };
@@ -316,8 +310,7 @@ gcc.Game = function(id) {
             map: $('<div class="map_canvas"></div>'),
             dock: $('<div class="dock"></div>'),
             sidebar: $('<div class="sidebar"></div>'),
-            dockLink: $('<div class="backlink"><img src="' + gcc.
-.graphic.arrowLeft + '" alt="Back"/></div>'),
+            dockLink: $('<div class="backlink"><img src="' + gcc.images.graphic.arrowLeft + '" alt="Back"/></div>'),
             sidebarLink: $('<div class="backlink"><img src="' + gcc.images.graphic.arrowUp + '" alt="Back"/></div>'),
             controlBox: controlBoxObject.getControlBox()
 		},
@@ -637,14 +630,13 @@ gcc.Unit = function(station, type) {
 gcc.AnimatedMarker = function(unit, startPos) {
 	var self = this;
 	this.unit = unit;
-	elIcon = gcc.images.aniMarkers[unit.type].marker;
+	
 	console.log();
+	
 	this.marker = new google.maps.Marker({
         position: startPos,
-        map: gcc.game.map, // FIXME add to map in gcc.game.addUnit
-
-		//this is how it should work, i just don't get why it doesn't
-		icon: elIcon.toString(), // FIXME correct image
+        map: gcc.game.map,
+		icon: gcc.images.aniMarkers[unit.type],
 		visible: false
     });
 	this.polyline = new google.maps.Polyline({
