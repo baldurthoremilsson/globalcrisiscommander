@@ -450,6 +450,7 @@ gcc.Game = function(id) {
         		return a.time - b.time;
         	});
         },
+		//FIXME
         checkWinningConditions: function() {
         	var incidents,
         		messagebox,
