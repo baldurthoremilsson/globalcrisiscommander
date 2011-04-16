@@ -448,6 +448,7 @@ gcc.Game = function(id) {
         		return a.time - b.time;
         	});
         },
+		//FIXME
         checkWinningConditions: function() {
         	var incidents,
         		messagebox,
@@ -628,7 +629,6 @@ gcc.Unit = function(station, type) {
 gcc.AnimatedMarker = function(unit, startPos) {
 	var self = this;
 	this.unit = unit;
-    console.log(gcc.images.units.markers[unit.type]);
 	this.marker = new google.maps.Marker({
         position: startPos,
         map: gcc.game.map, // FIXME add to map in gcc.game.addUnit
