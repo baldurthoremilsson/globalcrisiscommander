@@ -277,6 +277,7 @@ gcc.Game = function(id) {
     this.map = new google.maps.Map(this.DOM.map[0], this.mapOptions);
     this.accidents = [];
     this.stations = [];
+    this.units = [];
     
     $(window).resize(function() {
         self.DOM.map
@@ -327,16 +328,18 @@ gcc.Game = function(id) {
         		messagebox,
         		i;
         	
-        	$('.infobox', this.DOM.dock).remove();
-        	$('.infobox', this.DOM.sidebar).remove();
-        	
+            while(this.accidents.length > 0) {
+                o = this.accidents.pop();
+                o.remove();
+            }
+            while(this.stations.length > 0) {
+                o = this.stations.pop();
+                o.remove();
+            }
+            
         	this.DOM.dockLink.hide();
         	this.DOM.sidebarLink.hide();
         	
-            this.accidents = [];
-            this.stations = [];
-            this.units = [];
-            
             this.map.setCenter(new google.maps.LatLng(level.location.lat, level.location.long));
             
             for(i = 0; i < level.accidents.length; i++)
@@ -382,6 +385,15 @@ gcc.Game = function(id) {
         },
         addUnit: function(unit) {
         	this.units.push(unit);
+        },
+        removeUnit: function(unit) {
+            var i;
+            for(i = 0; i < this.units.length; i++) {
+                if(this.units[i] === unit) {
+                    this.units.splice(i, 1);
+                    break;
+                }
+            }
         },
         pause: function() {
         	this.running = false;
@@ -498,7 +510,7 @@ gcc.Accident = function(accident) {
         icon: gcc.images.accidents[this.type].marker
     });
     
-    google.maps.event.addListener(this.marker, 'click', function() {
+    this.markerListener = google.maps.event.addListener(this.marker, 'click', function() {
         self.displayIncidents();
     });
 };
@@ -514,6 +526,18 @@ gcc.Accident = function(accident) {
                 this.incidents[i].DOM.displayItem();
             
             return false;
+        },
+        remove: function() {
+            var incident;
+            
+            this.DOM.remove();
+            this.marker.setMap(null);
+            google.maps.event.removeListener(this.markerListener);
+            
+            while(this.incidents.length > 0) {
+                incident = this.incidents.pop();
+                incident.remove();
+            }
         }
     };
 
@@ -536,7 +560,7 @@ gcc.Station = function(station, game) {
         position: this.location,
         icon: gcc.images.stations[this.type].marker
     });
-    google.maps.event.addListener(this.marker, 'click', function() {
+    this.markerListener = google.maps.event.addListener(this.marker, 'click', function() {
         self.displayUnits();
     });
     
@@ -559,6 +583,19 @@ gcc.Station = function(station, game) {
                 this.units[i].DOM.displayItem();
             
             return false;
+        },
+        remove: function() {
+            var unit;
+            
+            this.DOM.remove();
+            this.marker.setMap(null);
+            google.maps.event.removeListener(this.markerListener);
+            
+            while(this.units.length > 0) {
+                unit = this.units.pop();
+                gcc.game.removeUnit(unit);
+                unit.remove();
+            }
         }
     };
 
@@ -602,7 +639,10 @@ gcc.Incident = function(accident, incident) {
 			burningCar: ["firetruck"],
 			robber: ["policecar"],
 			trafficjam: ["policecar"]
-		}
+		},
+		remove: function() {
+            this.DOM.remove();
+        }
 	};
 
 gcc.Unit = function(station, type) {
@@ -623,7 +663,11 @@ gcc.Unit = function(station, type) {
 		dragOpts: {
 			containment: "html",
 			revert: true
-		}
+		},
+		remove: function() {
+            this.DOM.remove();
+            this.marker.remove();
+        }
 	};
 
 gcc.AnimatedMarker = function(unit, startPos) {
@@ -702,7 +746,10 @@ gcc.AnimatedMarker = function(unit, startPos) {
 		},
 		isVisible: function() {
 			return this.marker.getVisible();
-		}
+		},
+		remove: function() {
+            this.marker.setMap(null);
+        }
 	};
 
 gcc.getInfobox = function(type, className, img) {
