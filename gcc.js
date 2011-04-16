@@ -14,33 +14,35 @@
                return this.each(function() {
                     var props = {position:'absolute'};
                     if (options.vertical) {
-                    	var top = $(options.inside).height();
-                    	if($(this).attr('height'))
-                    		top -= $(this).attr('height');
-                    	else
-                    		top -= $(this).outerHeight();
-                    	top /= 2;
-                    	if (options.withScrolling)
-                    		top += $(options.inside).scrollTop() || 0;
-                    	top = (top > options.minY ? top : options.minY);
-                    	$.extend(props, {top: top+'px'});
+                        var top = $(options.inside).height();
+                        if($(this).attr('height')) {
+                            top -= $(this).attr('height');
+                        }
+                        else {
+                            top -= $(this).outerHeight();
+                        }
+                        top /= 2;
+                        if (options.withScrolling)
+                            top += $(options.inside).scrollTop() || 0;
+                        top = (top > options.minY ? top : options.minY);
+                        $.extend(props, {top: top+'px'});
                     }
                     if (options.horizontal) {
-                    	var left = $(options.inside).width();
-                    	if($(this).attr('width'))
-                    		left -= $(this).attr('width');
-                    	else
-                    		left -= $(this).outerWidth();
-                    	left /= 2;
-                    	if (options.withScrolling)
-                    		left += $(options.inside).scrollLeft() || 0;
-                    	left = (left > options.minX ? left : options.minX);
-                    	$.extend(props, {left: left+'px'});
+                        var left = $(options.inside).width();
+                        if($(this).attr('width'))
+                            left -= $(this).attr('width');
+                        else
+                            left -= $(this).outerWidth();
+                        left /= 2;
+                        if (options.withScrolling)
+                            left += $(options.inside).scrollLeft() || 0;
+                        left = (left > options.minX ? left : options.minX);
+                        $.extend(props, {left: left+'px'});
                     }
                     if (options.transition > 0)
-                    	$(this).animate(props, options.transition);
+                        $(this).animate(props, options.transition);
                     else
-                    	$(this).css(props);
+                        $(this).css(props);
                     return $(this);
                });
           }
@@ -186,28 +188,25 @@ var gcc = {
 		stations: {
 			firestation: {
 				sidebar: "assets/pics/firestation-icon.png",
-				marker: "assets/pics/firestation-icon.png",
-				aniUnitMarker : "assets/pics/fire_escape_32.png"
+				marker: "assets/pics/firestation-icon.png"
 			},
 			policestation: {
 				sidebar: "assets/pics/policestation-icon.png",
-				marker: "assets/pics/policestation-icon.png",
-				aniUnitMarker: "assets/pics/police_32.png"
+				marker: "assets/pics/policestation-icon.png"
 			},
 			hospital: {
 				sidebar: "assets/pics/hospital-icon.png",
-				marker: "assets/pics/hospital-icon.png",
-				aniUnitMarker: "assets/pics/ambulance_32.png"
+				marker: "assets/pics/hospital-icon.png"
 			}
 		},
 		accidents: {
 			fire: {
 				dock: "assets/pics/fire-icon.png",
-				marker: "assets/pics/fire-icon.png",
+				marker: "assets/pics/fire-icon.png"
 			},
 			carcrash: {
 				dock: "assets/pics/carcrash-icon.png",
-				marker: "assets/pics/carcrash-icon.png",
+				marker: "assets/pics/carcrash-icon.png"
 			},
 			robbery: {
 				dock: "assets/pics/robbery-icon.png",
@@ -226,7 +225,12 @@ var gcc = {
 		units: {
 			firetruck: "assets/pics/firetruck_128.png",
 			policecar: "assets/pics/policecar_128.png",
-			ambulance: "assets/pics/ambulance_128.png"
+			ambulance: "assets/pics/ambulance_128.png",
+			markers: {
+                firetruck: "assets/pics/fire_escape_32.png",
+                policecar: "assets/pics/policecar_32.png",
+                ambulance: "assets/pics/ambulance_32.png"
+            }
 		},
 		graphic: {
 			arrowUp: "assets/pics/arrow_up.png",
@@ -234,18 +238,6 @@ var gcc = {
 			arrowRight: "assets/pics/arrow_right.png",
 			arrowLeft: "assets/pics/arrow_left.png"
 		},
-		aniMarkers: {
-			policecar: {
-				marker: "assets/pics/policecar_32.png",
-			},
-			firetruck : {
-				marker: "assets/pics/fire_escape_32.png",
-			},
-			ambulance:
-			{
-				marker: "assets/pics/ambulance_32.png",
-			}
-		}
 	}
 };
 
@@ -316,8 +308,7 @@ gcc.Game = function(id) {
             map: $('<div class="map_canvas"></div>'),
             dock: $('<div class="dock"></div>'),
             sidebar: $('<div class="sidebar"></div>'),
-            dockLink: $('<div class="backlink"><img src="' + gcc.
-.graphic.arrowLeft + '" alt="Back"/></div>'),
+            dockLink: $('<div class="backlink"><img src="' + gcc.images.graphic.arrowLeft + '" alt="Back"/></div>'),
             sidebarLink: $('<div class="backlink"><img src="' + gcc.images.graphic.arrowUp + '" alt="Back"/></div>'),
             controlBox: controlBoxObject.getControlBox()
 		},
@@ -637,14 +628,12 @@ gcc.Unit = function(station, type) {
 gcc.AnimatedMarker = function(unit, startPos) {
 	var self = this;
 	this.unit = unit;
-	elIcon = gcc.images.aniMarkers[unit.type].marker;
-	console.log();
+    console.log(gcc.images.units.markers[unit.type]);
 	this.marker = new google.maps.Marker({
         position: startPos,
         map: gcc.game.map, // FIXME add to map in gcc.game.addUnit
 
-		//this is how it should work, i just don't get why it doesn't
-		icon: elIcon.toString(), // FIXME correct image
+		icon: gcc.images.units.markers[unit.type],
 		visible: false
     });
 	this.polyline = new google.maps.Polyline({
