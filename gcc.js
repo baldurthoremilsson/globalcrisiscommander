@@ -794,5 +794,5 @@ gcc.getInfobox = function(type, className, img) {
 $(function() {
     gcc.game = new gcc.Game("board");
     gcc.game.startLevel(gcc.levels[0]);
-	$('#controlbox').click(function() {controlBoxObject.click();});
+	$('#controlbox img').click(function() {controlBoxObject.click();});
 });
