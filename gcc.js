@@ -227,7 +227,7 @@ var gcc = {
 			policecar: "assets/pics/policecar_128.png",
 			ambulance: "assets/pics/ambulance_128.png",
 			markers: {
-                firetruck: "assets/pics/fire_escape_32.png",
+                firetruck: "assets/pics/firetruck_32.png",
                 policecar: "assets/pics/policecar_32.png",
                 ambulance: "assets/pics/ambulance_32.png"
             }
