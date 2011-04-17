@@ -12,7 +12,7 @@ var gcc = {
     levels: [
              //level 2
              {
-                 location: {lat: 34.154769, long: -118.345413},
+                 location: {lat: 34.156769, long: -118.342013},
                  accidents: [
                      {
                          location: {lat: 34.154769, long: -118.345413},
@@ -37,7 +37,7 @@ var gcc = {
                  stations: [
                      {
                          type: "policestation",
-                         location: {lat: 34.154254, long: -118.336015},
+                         location: {lat: 34.155254, long: -118.338015},
                          address: "West Olive Avenue",
                          units: 1,
                          unittype: "policecar"
@@ -215,7 +215,6 @@ gcc.Game = function(id) {
     setInterval(function() {
     	self.update();
     }, 30);
-    this.updateUnits();
 };
 
     gcc.Game.prototype = {
@@ -229,8 +228,12 @@ gcc.Game = function(id) {
 		},
         mapOptions: {
             zoom: 16,
+            maxZoom: 16,
+            minZoom: 16,
             center: new google.maps.LatLng(0, 0),
-            mapTypeId: google.maps.MapTypeId.ROADMAP
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            disableDefaultUI: true,
+            draggable: false
         },
         MENU_SIZE: 150,
         INFOBOX_RATIO: 0.75,
@@ -333,15 +336,8 @@ gcc.Game = function(id) {
                 this.stations[i].DOM.displayItem();
         },
         updateUnits: function() {
-        	var self = this,
-        		i,
+        	var i,
         		unit;
-        	
-            setTimeout(function() {
-            	self.updateUnits();
-            }, UNIT_UPDATE);
-        	if(!this.running)
-        		return;
         	
         	for(i = 0; i < this.units.length; i++) {
         		unit = this.units[i];
@@ -353,8 +349,11 @@ gcc.Game = function(id) {
         	var currTime = new Date().getTime(),
         		i,
         		event;
-        	if(this.running)
+            
+        	if(this.running) {
         		this.time += currTime - this.lastUpdate;
+                this.updateUnits();
+            }
         	this.lastUpdate = currTime;
         	
         	while(this.timedEvents.length != 0) {
