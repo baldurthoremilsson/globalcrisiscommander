@@ -119,32 +119,50 @@ var gcc = {
     images: {
 		stations: {
 			firestation: {
-				marker: "assets/pics/firestation-icon.png"
+				marker: "assets/pics/firestation-icon.png",
+				hoverMarker: "assets/pics/firestation-icon.png" //FIXME
 			},
 			policestation: {
-				marker: "assets/pics/policestation-icon.png"
+				marker: "assets/pics/policestation-icon.png",
+				hoverMarker: "assets/pics/policestation-icon.png" //FIXME
 			},
 			hospital: {
-				marker: "assets/pics/hospital-icon.png"
+				marker: "assets/pics/hospital-icon.png",
+				hoverMarker: "assets/pics/hospital-icon.png" //FIXME
 			}
 		},
 		accidents: {
 			fire: {
-				marker: "assets/pics/fire-icon.png"
+				marker: "assets/pics/fire-icon.png",
+				hoverMarker: "assets/pics/fire-icon.png" //FIXME
 			},
 			carcrash: {
-				marker: "assets/pics/carcrash-icon.png"
+				marker: "assets/pics/carcrash-icon.png",
+				hoverMarker: "assets/pics/carcrash-icon.png" //FIXME
 			},
 			robbery: {
-				marker: "assets/pics/robbery-icon.png"
+				marker: "assets/pics/robbery-icon.png",
+				hoverMarker: "assets/pics/robbery-icon.png" //FIXME
 			}
 		},
 		units: {
-			markers: {
-                firetruck: "assets/pics/firetruck_32.png",
-                policecar: "assets/pics/policecar_32.png",
-                ambulance: "assets/pics/ambulance_32.png"
-            }
+                firetruck: 
+				{	
+					marker : "assets/pics/firetruck_32.png",
+					hoverMarker : "assets/pics/firetruck_32.png" //FIXME
+				},
+				
+                policecar: 
+				{
+					marker : "assets/pics/policecar_32.png",
+					hoverMarker: "assets/pics/policecar_32.png" //FIXME
+				},
+                ambulance: 
+				{
+					marker: "assets/pics/ambulance_32.png",
+					hoverMarker: "assets/pics/ambulance_32.png" //FIXME
+            	},
+
 		},
 		graphic: {
 			arrowUp: "assets/pics/arrow_up.png",
@@ -412,12 +430,25 @@ gcc.Accident = function(accident) {
     for(i = 0; i < accident.incidents.length; i++) {
         this.addIncident(accident.incidents[i]);
     }
-    
+    console.log("log");
     this.DOM = gcc.getInfobox("dock", "accident", this.type)
     	.data("accident", this)
     	.click(function() {
     		self.displayIncidents();
     	});
+		this.DOM.hover(
+			function()
+			{
+				self.marker.setIcon(gcc.images.accidents["fire"].marker);
+				console.log("accident hover");
+			},
+			function()
+			{
+				self.marker.setIcon(gcc.images.accidents["robbery"].marker);
+				console.log("accident hover off");
+			}
+			
+	);
     this.marker = new google.maps.Marker({
         position: this.location,
         icon: gcc.images.accidents[this.type].marker
@@ -471,6 +502,19 @@ gcc.Station = function(station, game) {
     	.click(function() {
     		self.displayUnits();
     	});
+		this.DOM.hover(
+			function()
+			{
+				self.marker.setIcon(gcc.images.stations[self.type].hoverMarker);
+				console.log("station hover");
+			},
+			function()
+			{
+				self.marker.setIcon(gcc.images.stations[self.type].hoverMarker);
+				console.log("station hover off");
+			}
+			
+	);
     
     this.marker = new google.maps.Marker({
         position: this.location,
@@ -620,6 +664,19 @@ gcc.Unit = function(station, type) {
     	.draggable(this.dragOpts)
     	.hide()
     	.data('unit', this);
+		this.DOM.hover(
+			function()
+			{
+				self.marker.marker.setIcon(gcc.images.units[self.type].hoverMarker);
+				console.log("unit hover");
+			},
+			function()
+			{
+				self.marker.marker.setIcon(gcc.images.units[self.type].hoverMarker);
+				console.log("unit hover off");
+			}
+			
+	);
     gcc.game.DOM.sidebar.append(this.DOM);
     
     this.marker = new gcc.AnimatedMarker(this, this.station.location);
@@ -704,7 +761,7 @@ gcc.AnimatedMarker = function(unit, startPos) {
         position: startPos,
         map: gcc.game.map, // FIXME add to map in gcc.game.addUnit
 
-		icon: gcc.images.units.markers[unit.type],
+		icon: gcc.images.units[unit.type].marker,
 		visible: false
     });
 	this.polyline = new google.maps.Polyline({
