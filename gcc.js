@@ -1,79 +1,3 @@
-// http://plugins.jquery.com/project/autocenter
-(function($){
-     $.fn.extend({
-          center: function (opt) {
-               var options =  $.extend({ // Default values
-                    inside:window, // element, center into window
-                    transition: 0, // millisecond, transition time
-                    minX:0, // pixel, minimum left element value
-                    minY:0, // pixel, minimum top element value
-                    vertical:true, // booleen, center vertical
-                    withScrolling:true, // booleen, take care of element inside scrollTop when minX < 0 and window is small or when window is big
-                    horizontal:true // booleen, center horizontal
-               }, opt);
-               return this.each(function() {
-                    var props = {position:'absolute'};
-                    if (options.vertical) {
-                        var top = $(options.inside).height();
-                        if($(this).attr('height')) {
-                            top -= $(this).attr('height');
-                        }
-                        else {
-                            top -= $(this).outerHeight();
-                        }
-                        top /= 2;
-                        if (options.withScrolling)
-                            top += $(options.inside).scrollTop() || 0;
-                        top = (top > options.minY ? top : options.minY);
-                        $.extend(props, {top: top+'px'});
-                    }
-                    if (options.horizontal) {
-                        var left = $(options.inside).width();
-                        if($(this).attr('width'))
-                            left -= $(this).attr('width');
-                        else
-                            left -= $(this).outerWidth();
-                        left /= 2;
-                        if (options.withScrolling)
-                            left += $(options.inside).scrollLeft() || 0;
-                        left = (left > options.minX ? left : options.minX);
-                        $.extend(props, {left: left+'px'});
-                    }
-                    if (options.transition > 0)
-                        $(this).animate(props, options.transition);
-                    else
-                        $(this).css(props);
-                    return $(this);
-               });
-          }
-     });
-})(jQuery);
-
-// https://gist.github.com/268257
-(function($) {
-	$.fn.extend({
-		imagesLoaded: function(callback){
-			var elems = this.filter('img'),
-				len = elems.length;
-		      
-			elems.bind('load',function(){
-				if (--len <= 0){ callback.call(elems,this); }
-			}).each(function(){
-				// cached images don't fire load sometimes, so we reset src.
-				if (this.complete || this.complete === undefined){
-					var src = this.src;
-					// webkit hack from http://groups.google.com/group/jquery-dev/browse_thread/thread/eee6ab7b2da50e1f
-					// data uri bypasses webkit log warning (thx doug jones)
-					this.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
-					this.src = src;
-				}
-			});
-
-			return this;
-		}
-	});
-})(jQuery);
-
 // Make sure items have correct display value in their css
 (function($) {
 	$.fn.extend({
@@ -93,6 +17,7 @@ var gcc = {
                      {
                          location: {lat: 34.154769, long: -118.345413},
                          type: "robbery",
+                         address: "North Pass Avenue",
                          incidents: [
                              {
                              	type: "robber",
@@ -113,18 +38,21 @@ var gcc = {
                      {
                          type: "policestation",
                          location: {lat: 34.154254, long: -118.336015},
+                         address: "West Olive Avenue",
                          units: 1,
                          unittype: "policecar"
                      },
                      {
                          type: "policestation",
                          location: {lat: 34.159901, long: -118.345091},
+                         address: "West Verdugo Avenue",
                          units: 2,
                          unittype: "policecar"
                      },
                      {
                          type: "hospital",
                          location: {lat: 34.159084, long: -118.338954},
+                         address: "West Oak Street",
                          units: 1,
                          unittype: "ambulance"
                      }
@@ -141,6 +69,7 @@ var gcc = {
                 {
                     location: {lat: 34.435169, long: -119.797239},
                     type: "carcrash",
+                    address: "Hollister Avenue",
                     incidents: [
                         {
                         	type: "injury",
@@ -161,18 +90,21 @@ var gcc = {
                 {
                     type: "firestation",
                     location: {lat: 34.437416, long: -119.802518},
+                    address: "Santa Ana Avenue",
                     units: 1,
                     unittype: "firetruck"
                 },
                 {
                     type: "hospital",
                     location: {lat: 34.434753, long: -119.794664},
+                    address: "Hollister Avenue",
                     units: 2,
                     unittype: "ambulance"
                 },
                 {
                     type: "policestation",
                     location: {lat: 34.438469, long: -119.796177},
+                    address: "South San Marcos Road",
                     units: 1,
                     unittype: "policecar"
                 }
@@ -187,45 +119,27 @@ var gcc = {
     images: {
 		stations: {
 			firestation: {
-				sidebar: "assets/pics/firestation-icon.png",
 				marker: "assets/pics/firestation-icon.png"
 			},
 			policestation: {
-				sidebar: "assets/pics/policestation-icon.png",
 				marker: "assets/pics/policestation-icon.png"
 			},
 			hospital: {
-				sidebar: "assets/pics/hospital-icon.png",
 				marker: "assets/pics/hospital-icon.png"
 			}
 		},
 		accidents: {
 			fire: {
-				dock: "assets/pics/fire-icon.png",
 				marker: "assets/pics/fire-icon.png"
 			},
 			carcrash: {
-				dock: "assets/pics/carcrash-icon.png",
 				marker: "assets/pics/carcrash-icon.png"
 			},
 			robbery: {
-				dock: "assets/pics/robbery-icon.png",
 				marker: "assets/pics/robbery-icon.png"
 			}
 		},
-		incidents: {
-			injury: "assets/pics/injury.png",
-			burningHouse: "assets/pics/burning_house.gif",
-			trappedInHouse: "assets/pics/trapped_in_house.png",
-			trappedInCar: "assets/pics/trapped_in_car.gif",
-			burningCar: "assets/pics/burning_car.gif",
-			robber: "assets/pics/robber_32.png",
-			trafficjam: "assets/pics/trafficjam.gif"
-		},
 		units: {
-			firetruck: "assets/pics/firetruck_128.png",
-			policecar: "assets/pics/policecar_128.png",
-			ambulance: "assets/pics/ambulance_128.png",
 			markers: {
                 firetruck: "assets/pics/firetruck_32.png",
                 policecar: "assets/pics/policecar_32.png",
@@ -500,7 +414,7 @@ gcc.Accident = function(accident) {
     	this.incidents.push(new gcc.Incident(this, accident.incidents[i]));
     }
     
-    this.DOM = gcc.getInfobox("dock", "accident", gcc.images.accidents[this.type].dock)
+    this.DOM = gcc.getInfobox("dock", "accident", this.type)
     	.data("accident", this)
     	.click(function() {
     		self.displayIncidents();
@@ -550,7 +464,7 @@ gcc.Station = function(station, game) {
     this.location = new google.maps.LatLng(station.location.lat, station.location.long);
     this.type = station.type;
     
-    this.DOM = this.DOM = gcc.getInfobox("sidebar", "station", gcc.images.stations[this.type].sidebar)
+    this.DOM = this.DOM = gcc.getInfobox("sidebar", "station", this.type)
     	.data("station", this)
     	.click(function() {
     		self.displayUnits();
@@ -607,7 +521,7 @@ gcc.Incident = function(accident, incident) {
     
     this.resolved = false;
     
-    this.DOM = gcc.getInfobox("dock", "incident", gcc.images.incidents[this.type])
+    this.DOM = gcc.getInfobox("dock", "incident", this.type)
     	.data("incident", this)
     	.droppable({
     		accept: function(draggable) {
@@ -620,7 +534,13 @@ gcc.Incident = function(accident, incident) {
     		},
     		drop: function(event, ui) {
     			var unit = ui.draggable.data('unit');
-    			unit.marker.goTo(self.accident.location);
+                
+                if(unit.occupied)
+                    return;
+                
+    			unit.marker.goTo(self.accident.location, function() {
+                    unit.arrival(self);
+                });
     			$(this).css('background-color', "green");
     			$(this).data("incident").resolved = true;
     			gcc.game.checkWinningConditions();
@@ -650,8 +570,9 @@ gcc.Unit = function(station, type) {
 
     this.station = station;
     this.type = type;
+    this.occupied = false;
 
-    this.DOM = gcc.getInfobox("sidebar", "unit " + this.type, gcc.images.units[this.type])
+    this.DOM = gcc.getInfobox("sidebar", "unit", this.type)
     	.draggable(this.dragOpts)
     	.hide()
     	.data('unit', this);
@@ -667,6 +588,17 @@ gcc.Unit = function(station, type) {
 		remove: function() {
             this.DOM.remove();
             this.marker.remove();
+        },
+        arrival: function(incident) {
+            if(this.type == "policecar") {
+                if(incident.type == "robber") {
+                    self.occupied = true;
+                }
+            }
+            else if(this.type == "ambulance") {
+            }
+            else if(this.type == "firetruck") {
+            }
         }
 	};
 
@@ -689,9 +621,10 @@ gcc.AnimatedMarker = function(unit, startPos) {
 	this.directionsResults = null;
 	this.running = false;
 	this.steps = [];
+    this.arrived = function() {};
 };
 	gcc.AnimatedMarker.prototype = {
-		goTo: function(destPos) {
+		goTo: function(destPos, arrived) {
 			var self = this,
 				request = {
 					origin: this.marker.getPosition(),
@@ -728,6 +661,9 @@ gcc.AnimatedMarker = function(unit, startPos) {
                 self.running = true;
 			});
 			this.marker.setVisible(true);
+            this.arrived = function() {
+                arrived();
+            };
 		},
 		move: function() {
 			var path = this.polyline.getPath(),
@@ -741,6 +677,7 @@ gcc.AnimatedMarker = function(unit, startPos) {
 			} else {
 				this.marker.setVisible(false);
 				this.running = false;
+                this.arrived();
 			}
 			return pos;
 		},
@@ -752,12 +689,13 @@ gcc.AnimatedMarker = function(unit, startPos) {
         }
 	};
 
-gcc.getInfobox = function(type, className, img) {
+// Infoboxes are displayed in the dock and sidebar
+gcc.getInfobox = function(position, category, type) {
 	var infoBox,
 		width,
 		height;
 	
-	switch(type) {
+	switch(position) {
 		case "dock":
 			height = this.game.MENU_SIZE - 24;
 			width = height * this.game.INFOBOX_RATIO;
@@ -769,8 +707,8 @@ gcc.getInfobox = function(type, className, img) {
 	}
 	
 	infoBox = $(
-		'<div class="infobox ' + className + '">' +
-			'<img src="' + img + '">' +
+		'<div class="infobox ' + category + ' ' + type + '">' +
+			'<div class="background"></div>' +
 			'<div class="description">' +
 				'<div class="text">' +
 					'description' +
@@ -778,14 +716,6 @@ gcc.getInfobox = function(type, className, img) {
 			'<div class="background"></div>' +
 		'</div>'
 	).width(width).height(height);
-	
-	$('img', infoBox).imagesLoaded(function() {
-		var $this = $(this);
-		$this.center({
-			inside: infoBox,
-			minX: -$this.attr('width')/2,
-			minY: -$this.attr('height')/2});
-	});
 	
 	return infoBox;
 };

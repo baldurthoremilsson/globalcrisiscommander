@@ -70,7 +70,9 @@ body {
     -webkit-border-radius: 7px;
     -border-radius: 7px;
 }
-    .infobox.station,
+    .infobox.policestation,
+    .infobox.hospital,
+    .infobox.firestation,
     .infobox.accident {
         cursor: pointer;
     }
@@ -80,6 +82,69 @@ body {
     .infobox .description {
         display: none;
     }
+    .infobox .background {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        opacity: 0.5;
+        background-repeat: no-repeat;
+        background-position: center center;
+    }
+        .infobox:hover .background {
+            opacity: 0.7;
+        }
+        /* stations */
+        .infobox.policestation .background {            
+            background-image: url('assets/pics/policestation-icon.png');
+        }
+        .infobox.firestation .background {            
+            background-image: url('assets/pics/firestation-icon.png');
+        }
+        .infobox.hospital .background {            
+            background-image: url('assets/pics/hospital-icon.png');
+        }
+        /* accidents */
+        .infobox.fire .background {            
+            background-image: url('assets/pics/fire-icon.png');
+        }
+        .infobox.carcrash .background {            
+            background-image: url('assets/pics/carcrash-icon.png');
+        }
+        .infobox.robbery .background {            
+            background-image: url('assets/pics/robbery-icon.png');
+        }
+        /* units */
+        .infobox.policecar .background {            
+            background-image: url('assets/pics/policecar_128.png');
+        }
+        .infobox.firetruck .background {            
+            background-image: url('assets/pics/firetruck_128.png');
+        }
+        .infobox.ambulance .background {            
+            background-image: url('assets/pics/ambulance_128.png');
+        }
+        /* incidents */
+        .infobox.injury .background {            
+            background-image: url('assets/pics/injury.png');
+        }
+        .infobox.burningHouse .background {            
+            background-image: url('assets/pics/burning_house.gif');
+        }
+        .infobox.trappedInHouse .background {            
+            background-image: url('assets/pics/trapped_in_house.png');
+        }
+        .infobox.trappedInCar .background {            
+            background-image: url('assets/pics/trapped_in_car.gif');
+        }
+        .infobox.burningCar .background {            
+            background-image: url('assets/pics/burning_car.gif');
+        }
+        .infobox.robber .background {            
+            background-image: url('assets/pics/robber_32.png');
+        }
+        .infobox.trafficJam .background {            
+            background-image: url('assets/pics/trafficjam.gif');
+        }
 
 
 #controlbox {
