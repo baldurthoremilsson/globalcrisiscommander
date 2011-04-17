@@ -5,7 +5,7 @@ var controlBoxObject =
 	score: 0,
 	is_expd: false,
 	html: $(
-				'<div id="controlbox" style="width: 190px; height:30px">'+
+				'<div id="controlbox">'+
 					'<img class="arrow-down" src="assets/pics/nav_arrow_down.png">'+
 					'<img class="arrow-up" src="assets/pics/nav_arrow_up.png" style="display: none">'+
 
@@ -23,8 +23,8 @@ var controlBoxObject =
 							'<tr><button id="exit">Exit Game</button></tr>'+
 						'</div>'+
 					'</div>'+
-					
-				 '</div>'
+				 '</div>'+
+				'<div id="overlay"></div>'
 			),
 			
 	getLevel: function() { return this.level; },
@@ -50,24 +50,29 @@ var controlBoxObject =
 	click: function() {
 		if(!this.is_expd)
 		{
-			this.width = $('#controlbox').css('width');
-			$('#controlbox img.arrrow-down').fadeOut();
-			$('#controlbox #controlboxCompressed').fadeOut();
-			$('#controlbox').animate(
+			$('#controlbox .arrow-down').fadeOut();
+			$('#controlbox #controlboxCompressed').fadeOut('fast');
+			$('#overlay').animate(
 				{width: 500, height: 50},
-				1000,
-				function() { $('#controlbox #controlboxExpanded').fadeIn(); }
+				200,
+				function() { $('#controlbox #controlboxExpanded').fadeIn('fast');
+							 $('#controlbox').css({width: 500, height: 50});
+							 $('#controlbox .arrow-up').fadeIn();
+						   } 
 			);
 			this.is_expd = true;
 			return;
 		}
 				
-		$('#controlbox img.arrrow-down').fadeOut();
-		$('#controlbox #controlboxExpanded').fadeOut();
-		$('#controlbox').animate(
+		$('#controlbox .arrow-up').fadeOut();
+		$('#controlbox #controlboxExpanded').fadeOut('fast');
+		$('#overlay').animate(
 			{width: 190, height: 30},
-			1000,
-			function() { $('#controlbox #controlboxCompressed').fadeIn(); }
+			200,
+			function() { $('#controlbox #controlboxCompressed').fadeIn('fast');
+						 $('#controlbox').css({width: 190, height: 30});
+						 $('#controlbox .arrow-down').fadeIn(); 
+					   } 
 			);
 
 		this.is_expd = false;

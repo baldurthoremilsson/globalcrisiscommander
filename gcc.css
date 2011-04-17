@@ -146,13 +146,10 @@ body {
             background-image: url('assets/pics/trafficjam.gif');
         }
 
-
+/*
 #controlbox {
-	/*width: 180px;*/
-	background: url('assets/pics/languagebox_gradient.png');
-	background-repeat: repeat-x;
-	background-position: bottom;
-	background-color: white;
+	width: 180px;
+	color: #fff;
 	position: absolute;
 	top: 0;
 	left: 10px;
@@ -160,10 +157,55 @@ body {
 	-webkit-box-shadow: 0 0 5px #888;
 	box-shadow: 0 0 5px #888;
 	padding: 13px 5px 5px 5px;
-	z-index: 1;
+	z-index: 3;
+	 border: 2px solid black;
+    -moz-border-radius: 7px;
+    -webkit-border-radius: 7px;
+    -border-radius: 7px;
+
 }
+div.transparency {
+	width: 180px;
+	position: absolute;
+	background-color: black;
+	z-index: 2;
+	opacity: 0.5;
+}
+*/
 
 /*#controlboxCompressed { width: 180px; }*/
+
+#overlay {
+	height: 30px; 
+	width: 190px;
+	left: 10; 
+	top: 0; 
+	position: absolute; 
+	opacity: 0.5; 
+	background: #000; 
+	border-right: 1px solid #666; 
+	z-index: 2;
+	filter:alpha(opacity=50); 
+	-khtml-opacity: 0.5; 
+	-moz-opacity:0.5;
+	moz-box-shadow: 0 0 5px #888;
+	-webkit-box-shadow: 0 0 5px #888;
+	border: 2px solid black;
+	-moz-border-radius: 7px;
+	-webkit-border-radius: 7px;
+	-border-radius: 7px;
+}
+
+#controlbox {
+	color: #fff;
+	font-size: 16px; 
+	height: 30px; 
+	width: 190px; 
+	left: 10;
+	top: 0; 
+	position: absolute; 
+	z-index: 3;
+ }
 	
 .cbc {
 	float: left;
@@ -176,35 +218,3 @@ body {
 	right: 4px;
 	}
 	
-	#languagebox .list {
-		padding: 4px;
-		background-image: url('assets/pics/languagebox_inner_gradient.png');
-		background-position: bottom;
-		background-repeat: repeat-x;
-		background-color: white;
-		border: 1px solid #C5C4C2;
-		width: 160px;
-		position: relative;
-		}
-	#language-button {
-			cursor: hand;
-			cursor: pointer;
-		}
-	#languagebox img {
-			position: absolute;
-			top: 4px;
-			right: 4px;
-		}
-	#languagebox img.arrow-up {
-			display: none;
-		}
-	#languagebox ul {
-			margin: 0;
-			padding: 0 0 5px 5px;
-			list-style: none;
-			display: none;
-		}
-	#languagebox ul li {
-			margin-top: 8px;
-		}
- 
