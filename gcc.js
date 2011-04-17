@@ -21,15 +21,15 @@ var gcc = {
                          incidents: [
                              {
                              	type: "robber",
-                             	time: 30.0
+                             	timeout: 30.0
                              },
                              {
                              	type: "robber",
-                             	time: 30.0
+                             	timeout: 30.0
                              },
                              {
                              	type: "robber",
-                             	time: 30.0
+                             	timeout: 30.0
                              }
                          ]
                      }
@@ -73,15 +73,15 @@ var gcc = {
                     incidents: [
                         {
                         	type: "injury",
-                        	time: 30.0
+                        	timeout: 30.0
                         },
                         {
                         	type: "trappedInCar",
-                        	time: 30.0
+                        	timeout: 30.0
                         },
                         {
                         	type: "trafficjam",
-                        	time: 30.0
+                        	timeout: 30.0
                         }
                     ]
                 }
@@ -410,7 +410,7 @@ gcc.Accident = function(accident) {
     this.incidents = [];
     
     for(i = 0; i < accident.incidents.length; i++) {
-    	this.incidents.push(new gcc.Incident(this, accident.incidents[i]));
+        this.addIncident(accident.incidents[i]);
     }
     
     this.DOM = gcc.getInfobox("dock", "accident", this.type)
@@ -439,6 +439,9 @@ gcc.Accident = function(accident) {
                 this.incidents[i].DOM.displayItem();
             
             return false;
+        },
+        addIncident: function(incident) {
+            this.incidents.push(new gcc.Incident(this, incident));
         },
         remove: function() {
             var incident;
@@ -519,6 +522,7 @@ gcc.Incident = function(accident, incident) {
     this.type = incident.type;
     
     this.resolved = false;
+    this.expired = false;
     
     this.DOM = gcc.getInfobox("dock", "incident", this.type)
     	.data("incident", this)
@@ -534,14 +538,17 @@ gcc.Incident = function(accident, incident) {
     		drop: function(event, ui) {
     			var unit = ui.draggable.data('unit');
                 
-                if(unit.occupied)
+                if(unit.occupied || self.expired)
                     return;
-                
     			unit.goTo(self.accident.location, self);
     		}
     	})
     	.hide();
     gcc.game.DOM.dock.append(this.DOM);
+    
+    this.timeoutHandle = setTimeout(function() {
+        self.timeout();
+    }, incident.timeout * 1000);
 };
 	gcc.Incident.prototype = {
 		acceptsUnits: {
@@ -559,8 +566,45 @@ gcc.Incident = function(accident, incident) {
             this.DOM.css('background-color', "green");
             gcc.game.checkWinningConditions();
         },
+        timeout: function() {
+            switch(this.type) {
+                case "injury":
+                    this.expire();
+                    break;
+                case "burningHouse":
+                    this.expire();
+                    var i;
+                    for(i = 0; i < 2; i++) {
+                        this.accident.addIncident({type: "burningHouse", timeout: 30000});
+                    }
+                    break;
+                case "trappedInHouse":
+                    this.expire();
+                    break;
+                case "trappedInCar":
+                    this.expire();
+                    break;
+                case "burningCar":
+                    this.expire();
+                    var i;
+                    for(i = 0; i < 10; i++) {
+                        this.accident.addIncident({type: "injury", timeout: 30000});
+                    }
+                    break;
+                case "robber":
+                    this.expire();
+                    break;
+                case "trafficjam":
+                    this.accident.addIncident({type: "injury", timeout: 30000});
+                    break;
+            }
+        },
+        expire: function() {
+            this.expired = true;
+        },
 		remove: function() {
             this.DOM.remove();
+            clearTimeout(this.timeoutHandle);
         }
 	};
 
@@ -597,7 +641,6 @@ gcc.Unit = function(station, type) {
             this.goTo(this.station.location, this.station);
         },
         arrived: function() {
-            console.log(this.type + " " + this.target.type);
             switch(this.type) {
                 case "policecar":
                     if(this.target.type == "robber") {
