@@ -570,6 +570,7 @@ gcc.Unit = function(station, type) {
     this.station = station;
     this.type = type;
     this.target = null;
+    this.occupied = false;
 
     this.DOM = gcc.getInfobox("sidebar", "unit", this.type)
     	.draggable(this.dragOpts)
@@ -592,42 +593,61 @@ gcc.Unit = function(station, type) {
             this.marker.goTo(location);
             this.target = incident;
         },
+        goToStation: function() {
+            this.goTo(this.station.location, this.station);
+        },
         arrived: function() {
             console.log(this.type + " " + this.target.type);
             switch(this.type) {
                 case "policecar":
                     if(this.target.type == "robber") {
                         this.target.resolve();
-                        // FIXME the unit has to return to base
+                        this.occupied = true;
+                        this.target = null;
+                        this.goToStation();
                     }
                     else if(this.target.type == "trafficjam") {
                         this.target.resolve();
+                        this.target = null;
+                    }
+                    else if(this.target.type == "policestation") {
+                        this.occupied = false;
+                        this.target = null;
                     }
                     break;
                 case "ambulance":
                     if(this.target.type == "injury") {
                         this.target.resolve();
                         // FIXME the unit has to return to base
+                        this.occupied = true;
+                        this.target = null;
+                        this.goToStation();
                     }
                     else if(this.target.type == "trappedInHouse") {
                         this.target.resolve();
+                        this.target = null;
                     }
                     else if(this.target.type == "trappedInCar") {
                         this.target.resolve();
+                        this.target = null;
                     }
                     break;
                 case "firetruck":
                     if(this.target.type == "burningHouse") {
                         this.target.resolve();
+                        this.target = null;
                     }
                     else if(this.target.type == "trappedInHouse") {
                         this.target.resolve();
+                        this.target = null;
                     }
                     else if(this.target.type == "trappedInCar") {
                         this.target.resolve();
+                        this.target = null;
                     }
                     else if(this.target.type == "burningCar") {
                         this.target.resolve();
+                        this.target = null;
                     }
                     break;
             };
