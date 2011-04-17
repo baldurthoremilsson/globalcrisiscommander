@@ -537,12 +537,7 @@ gcc.Incident = function(accident, incident) {
                 if(unit.occupied)
                     return;
                 
-    			unit.marker.goTo(self.accident.location, function() {
-                    unit.arrival(self);
-                });
-    			$(this).css('background-color', "green");
-    			$(this).data("incident").resolved = true;
-    			gcc.game.checkWinningConditions();
+    			unit.goTo(self.accident.location, self);
     		}
     	})
     	.hide();
@@ -559,6 +554,11 @@ gcc.Incident = function(accident, incident) {
 			robber: ["policecar"],
 			trafficjam: ["policecar"]
 		},
+		resolve: function() {
+            this.resolved = true;
+            this.DOM.css('background-color', "green");
+            gcc.game.checkWinningConditions();
+        },
 		remove: function() {
             this.DOM.remove();
         }
@@ -569,7 +569,7 @@ gcc.Unit = function(station, type) {
 
     this.station = station;
     this.type = type;
-    this.occupied = false;
+    this.target = null;
 
     this.DOM = gcc.getInfobox("sidebar", "unit", this.type)
     	.draggable(this.dragOpts)
@@ -588,16 +588,49 @@ gcc.Unit = function(station, type) {
             this.DOM.remove();
             this.marker.remove();
         },
-        arrival: function(incident) {
-            if(this.type == "policecar") {
-                if(incident.type == "robber") {
-                    self.occupied = true;
-                }
-            }
-            else if(this.type == "ambulance") {
-            }
-            else if(this.type == "firetruck") {
-            }
+        goTo: function(location, incident) {
+            this.marker.goTo(location);
+            this.target = incident;
+        },
+        arrived: function() {
+            console.log(this.type + " " + this.target.type);
+            switch(this.type) {
+                case "policecar":
+                    if(this.target.type == "robber") {
+                        this.target.resolve();
+                        // FIXME the unit has to return to base
+                    }
+                    else if(this.target.type == "trafficjam") {
+                        this.target.resolve();
+                    }
+                    break;
+                case "ambulance":
+                    if(this.target.type == "injury") {
+                        this.target.resolve();
+                        // FIXME the unit has to return to base
+                    }
+                    else if(this.target.type == "trappedInHouse") {
+                        this.target.resolve();
+                    }
+                    else if(this.target.type == "trappedInCar") {
+                        this.target.resolve();
+                    }
+                    break;
+                case "firetruck":
+                    if(this.target.type == "burningHouse") {
+                        this.target.resolve();
+                    }
+                    else if(this.target.type == "trappedInHouse") {
+                        this.target.resolve();
+                    }
+                    else if(this.target.type == "trappedInCar") {
+                        this.target.resolve();
+                    }
+                    else if(this.target.type == "burningCar") {
+                        this.target.resolve();
+                    }
+                    break;
+            };
         }
 	};
 
@@ -620,10 +653,9 @@ gcc.AnimatedMarker = function(unit, startPos) {
 	this.directionsResults = null;
 	this.running = false;
 	this.steps = [];
-    this.arrived = function() {};
 };
 	gcc.AnimatedMarker.prototype = {
-		goTo: function(destPos, arrived) {
+		goTo: function(destPos) {
 			var self = this,
 				request = {
 					origin: this.marker.getPosition(),
@@ -660,9 +692,6 @@ gcc.AnimatedMarker = function(unit, startPos) {
                 self.running = true;
 			});
 			this.marker.setVisible(true);
-            this.arrived = function() {
-                arrived();
-            };
 		},
 		move: function() {
 			var path = this.polyline.getPath(),
@@ -676,7 +705,7 @@ gcc.AnimatedMarker = function(unit, startPos) {
 			} else {
 				this.marker.setVisible(false);
 				this.running = false;
-                this.arrived();
+                this.unit.arrived();
 			}
 			return pos;
 		},
