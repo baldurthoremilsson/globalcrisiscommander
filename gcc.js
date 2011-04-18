@@ -22,19 +22,19 @@ var gcc = {
                  incidents: [
 					{
 						type: "burningHouse",
-						timeout: 60
+						timeout: 120
 					},
                      {
                      	type: "injury",
-                     	timeout: 30.0
+                     	timeout: 45.0
                      },
                      {
                      	type: "injury",
-                     	timeout: 30.0
+                     	timeout: 45.0
                      },
                      {
                      	type: "injury",
-                     	timeout: 30.0
+                     	timeout: 45.0
                      },
 					{
 						type: "injury",
@@ -53,7 +53,7 @@ var gcc = {
                  incidents: [
                      {
                      	type: "injury",
-                     	timeout: 30.0
+                     	timeout: 40.0
                      },
 					{
 						type: "burningHouse",
@@ -61,11 +61,11 @@ var gcc = {
 					},
                      {
                      	type: "injury",
-                     	timeout: 30.0
+                     	timeout: 40.0
                      },
                      {
                      	type: "injury",
-                     	timeout: 30.0
+                     	timeout: 40.0
                      },
                  ]
              }
@@ -120,15 +120,15 @@ var gcc = {
                          incidents: [
                              {
                              	type: "robber",
-                             	timeout: 30.0
+                             	timeout: 60.0
                              },
                              {
                              	type: "robber",
-                             	timeout: 30.0
+                             	timeout: 60.0
                              },
                              {
                              	type: "robber",
-                             	timeout: 30.0
+                             	timeout: 60.0
                              }
                          ]
                      }
@@ -173,15 +173,15 @@ var gcc = {
                     incidents: [
                         {
                         	type: "injury",
-                        	timeout: 30.0
+                        	timeout: 60.0
                         },
                         {
                         	type: "trappedInCar",
-                        	timeout: 30.0
+                        	timeout: 60.0
                         },
                         {
                         	type: "trafficjam",
-                        	timeout: 30.0
+                        	timeout: 60.0
                         }
                     ]
                 }
