@@ -605,12 +605,16 @@ gcc.Station = function(station, game) {
 		this.DOM.hover(
 			function()
 			{
-				self.marker.setIcon(gcc.images.stations[self.type].hoverMarker);
+				var x = self;
+				var x2 = this;
+				self.marker.setIcon(gcc.images.stations[self.type].hoverMarker); //FIXME: icon doesn't change back
 				console.log("station hover");
 			},
 			function()
 			{
-				self.marker.setIcon(gcc.images.stations[self.type].hoverMarker);
+				var y = self;
+				var y2 = this;
+				self.marker.setIcon(gcc.images.stations[self.type].hoverMarker); //FIXME: icon doesn't change back
 				console.log("station hover off");
 			}
 			
