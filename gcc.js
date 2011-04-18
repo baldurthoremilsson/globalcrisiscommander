@@ -405,7 +405,7 @@ gcc.Game = function(id) {
         				return;
         	}
         	
-        	messagebox = $('<div title="YOU WON!"><p>You are a true hero :)</p></div>');
+        	messagebox = $('<div title="YOU WON!"><p>Mission Accomplished</p></div>');
         	messagebox.dialog({
         		modal: true,
         		draggable: false,
