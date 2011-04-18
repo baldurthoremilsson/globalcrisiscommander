@@ -76,7 +76,7 @@ var gcc = {
                  type: "hospital",
                  location: {lat: 64.138396, long: -21.927166},
                  address: "Hringbraut",
-                 units: 3,
+                 units: 4,
                  unittype: "ambulance"
              },
              {
@@ -100,7 +100,7 @@ var gcc = {
                     type: "firestation",
                     location: {lat: 64.130976, long: -21.930084},
                     address: "Hringbraut",
-                    units: 2,
+                    units: 5,
                     unittype: "firetruck"
                 },
          ],
