@@ -120,29 +120,29 @@ var gcc = {
 		stations: {
 			firestation: {
 				marker: "assets/pics/firestation-icon.png",
-				hoverMarker: "assets/pics/firestation-icon.png" //FIXME
+				hoverMarker: "assets/pics/firestation-icon_sel.png" //FIXME
 			},
 			policestation: {
 				marker: "assets/pics/policestation-icon.png",
-				hoverMarker: "assets/pics/policestation-icon.png" //FIXME
+				hoverMarker: "assets/pics/policestation-icon_sel.png" //FIXME
 			},
 			hospital: {
 				marker: "assets/pics/hospital-icon.png",
-				hoverMarker: "assets/pics/hospital-icon.png" //FIXME
+				hoverMarker: "assets/pics/hospital-icon_sel.png" //FIXME
 			}
 		},
 		accidents: {
 			fire: {
 				marker: "assets/pics/fire-icon.png",
-				hoverMarker: "assets/pics/fire-icon.png" //FIXME
+				hoverMarker: "assets/pics/fire-icon_sel.png" //FIXME
 			},
 			carcrash: {
 				marker: "assets/pics/carcrash-icon.png",
-				hoverMarker: "assets/pics/carcrash-icon.png" //FIXME
+				hoverMarker: "assets/pics/carcrash-icon_sel.png" //FIXME
 			},
 			robbery: {
 				marker: "assets/pics/robbery-icon.png",
-				hoverMarker: "assets/pics/robbery-icon.png" //FIXME
+				hoverMarker: "assets/pics/robbery-icon_sel.png" //FIXME
 			}
 		},
 		units: {
@@ -439,12 +439,12 @@ gcc.Accident = function(accident) {
 		this.DOM.hover(
 			function()
 			{
-				self.marker.setIcon(gcc.images.accidents["fire"].marker);
+				self.marker.setIcon(gcc.images.accidents[self.type].hoverMarker);
 				console.log("accident hover");
 			},
 			function()
 			{
-				self.marker.setIcon(gcc.images.accidents["robbery"].marker);
+				self.marker.setIcon(gcc.images.accidents[self.type].marker);
 				console.log("accident hover off");
 			}
 			
