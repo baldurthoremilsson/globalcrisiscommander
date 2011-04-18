@@ -98,7 +98,7 @@ var gcc = {
 				{
 					//hjá landspítalanum: 64.138976,-21.930084
                     type: "firestation",
-                    location: {lat: 64.138976, long: -21.930084},
+                    location: {lat: 64.130976, long: -21.930084},
                     address: "Hringbraut",
                     units: 2,
                     unittype: "firetruck"
@@ -106,7 +106,7 @@ var gcc = {
          ],
          description: {
              title: "FIRE FIRE FIRE",
-             description: "TUESDAY APRIL 19th. Baldur having failed in his duties as webmaster for nord.is has decided to burn down the servers. Baldur is currently keeping 4 hostages in Naustið, each of the hostages is heavily wounded and require immediate medical assistance. Things however are not so simple because the fire has spread (somehow) to the University main building"
+             description: "TUESDAY APRIL 19th. Baldur having failed in his duties as webmaster for nord.is has decided to burn down the servers. Baldur is currently keeping 4 hostages in Naustid, each of the hostages is heavily wounded and require immediate medical assistance. Things however are not so simple because the fire has spread (somehow) to the University main building"
          }
      },
              //level 1
@@ -347,11 +347,11 @@ gcc.Game = function(id) {
         mapOptions: {
             zoom: 16,
             maxZoom: 16,
-            minZoom: 16,
+            minZoom: 14,
             center: new google.maps.LatLng(0, 0),
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             disableDefaultUI: true,
-            draggable: false
+            draggable: true
         },
         MENU_SIZE: 150,
         INFOBOX_RATIO: 0.75,
