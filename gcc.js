@@ -530,7 +530,7 @@ gcc.Accident = function(accident) {
     for(i = 0; i < accident.incidents.length; i++) {
         this.addIncident(accident.incidents[i]);
     }
-    console.log("log");
+    //console.log("log");
     this.DOM = gcc.getInfobox("dock", "accident", this.type)
     	.data("accident", this)
     	.click(function() {
@@ -540,12 +540,12 @@ gcc.Accident = function(accident) {
 			function()
 			{
 				self.marker.setIcon(gcc.images.accidents[self.type].hoverMarker);
-				console.log("accident hover");
+				//console.log("accident hover");
 			},
 			function()
 			{
 				self.marker.setIcon(gcc.images.accidents[self.type].marker);
-				console.log("accident hover off");
+				//console.log("accident hover off");
 			}
 			
 	);
@@ -606,12 +606,12 @@ gcc.Station = function(station, game) {
 			function()
 			{
 				self.marker.setIcon(gcc.images.stations[self.type].hoverMarker); //FIXME: icon doesn't change back
-				console.log("station hover");
+				//console.log("station hover");
 			},
 			function()
 			{
 				self.marker.setIcon(gcc.images.stations[self.type].marker); //FIXME: icon doesn't change back
-				console.log("station hover off");
+				//console.log("station hover off");
 			}
 			
 	);
@@ -768,12 +768,12 @@ gcc.Unit = function(station, type) {
 			function()
 			{
 				self.marker.marker.setIcon(gcc.images.units[self.type].hoverMarker);
-				console.log("unit hover");
+				//console.log("unit hover");
 			},
 			function()
 			{
 				self.marker.marker.setIcon(gcc.images.units[self.type].marker);
-				console.log("unit hover off");
+				//console.log("unit hover off");
 			}
 			
 	);
