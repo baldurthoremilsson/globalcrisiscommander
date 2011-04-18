@@ -16,10 +16,14 @@ var gcc = {
          location: {lat: 64.141017, long: -21.959782},
          accidents: [
              {
-                 location: {lat: 64.141017, long: -21.959782},
+                 location: {lat: 64.138855, long: -21.956082},
                  type: "fire",
                  address: "Dunhagi 5",
                  incidents: [
+					{
+						type: "burningHouse",
+						timeout: 60
+					},
                      {
                      	type: "injury",
                      	timeout: 30.0
@@ -41,6 +45,29 @@ var gcc = {
 						timeout: 120
 					}
                  ]
+             },
+			{
+                 location: {lat: 64.139117, long: -21.951682},
+                 type: "fire",
+                 address: "Dunhagi 5",
+                 incidents: [
+                     {
+                     	type: "injury",
+                     	timeout: 30.0
+                     },
+					{
+						type: "burningHouse",
+						timeout: 60
+					},
+                     {
+                     	type: "injury",
+                     	timeout: 30.0
+                     },
+                     {
+                     	type: "injury",
+                     	timeout: 30.0
+                     },
+                 ]
              }
          ],
          stations: [
@@ -49,7 +76,7 @@ var gcc = {
                  type: "hospital",
                  location: {lat: 64.138396, long: -21.927166},
                  address: "Hringbraut",
-                 units: 2,
+                 units: 3,
                  unittype: "ambulance"
              },
              {
@@ -57,7 +84,7 @@ var gcc = {
                  type: "hospital",
                  location: {lat: 64.121955, long: -21.888628},
                  address: "Fossvogsvegur",
-                 units: 1,
+                 units: 3,
                  unittype: "ambulance"
              },	
 			 {
@@ -67,11 +94,19 @@ var gcc = {
                     address: "Hringbraut",
                     units: 1,
                     unittype: "policecar"
-                }				
+                },
+				{
+					//hjá landspítalanum: 64.138976,-21.930084
+                    type: "firestation",
+                    location: {lat: 64.138976, long: -21.930084},
+                    address: "Hringbraut",
+                    units: 2,
+                    unittype: "firetruck"
+                },
          ],
          description: {
              title: "FIRE FIRE FIRE",
-             description: "TUESDAY APRIL 19th. Baldur having failed in his duties as webmaster for nord.is has decided to burn down the servers. Baldur is currently keeping 4 hostages in Naustið, each of the hostages is heavily wounded and require immediate medical assistance."
+             description: "TUESDAY APRIL 19th. Baldur having failed in his duties as webmaster for nord.is has decided to burn down the servers. Baldur is currently keeping 4 hostages in Naustið, each of the hostages is heavily wounded and require immediate medical assistance. Things however are not so simple because the fire has spread (somehow) to the University main building"
          }
      },
              //level 1
