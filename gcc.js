@@ -149,18 +149,18 @@ var gcc = {
                 firetruck: 
 				{	
 					marker : "assets/pics/firetruck_32.png",
-					hoverMarker : "assets/pics/firetruck_32.png" //FIXME
+					hoverMarker : "assets/pics/firetruck_32_sel.png" //FIXME
 				},
 				
                 policecar: 
 				{
 					marker : "assets/pics/policecar_32.png",
-					hoverMarker: "assets/pics/policecar_32.png" //FIXME
+					hoverMarker: "assets/pics/policecar_32_sel.png" //FIXME
 				},
                 ambulance: 
 				{
 					marker: "assets/pics/ambulance_32.png",
-					hoverMarker: "assets/pics/ambulance_32.png" //FIXME
+					hoverMarker: "assets/pics/ambulance_32_sel.png" //FIXME
             	},
 
 		},
@@ -672,7 +672,7 @@ gcc.Unit = function(station, type) {
 			},
 			function()
 			{
-				self.marker.marker.setIcon(gcc.images.units[self.type].hoverMarker);
+				self.marker.marker.setIcon(gcc.images.units[self.type].marker);
 				console.log("unit hover off");
 			}
 			
