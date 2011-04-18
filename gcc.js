@@ -10,7 +10,71 @@
 
 var gcc = {
     levels: [
-             //level 2
+	 //level 2
+     {
+		//64.141017,-21.959782 (Naustið)
+         location: {lat: 64.141017, long: -21.959782},
+         accidents: [
+             {
+                 location: {lat: 64.141017, long: -21.959782},
+                 type: "fire",
+                 address: "Dunhagi 5",
+                 incidents: [
+                     {
+                     	type: "injury",
+                     	timeout: 30.0
+                     },
+                     {
+                     	type: "injury",
+                     	timeout: 30.0
+                     },
+                     {
+                     	type: "injury",
+                     	timeout: 30.0
+                     },
+					{
+						type: "injury",
+						timeout: 60
+					},
+					{
+						type: "robber",
+						timeout: 120
+					}
+                 ]
+             }
+         ],
+         stations: [
+             {
+				 //64.138396,-21.927166 Landspítalinn
+                 type: "hospital",
+                 location: {lat: 64.138396, long: -21.927166},
+                 address: "Hringbraut",
+                 units: 2,
+                 unittype: "ambulance"
+             },
+             {
+				 //64.121955,-21.888628 Bogginn
+                 type: "hospital",
+                 location: {lat: 64.121955, long: -21.888628},
+                 address: "Fossvogsvegur",
+                 units: 1,
+                 unittype: "ambulance"
+             },	
+			 {
+					//hjá landspítalanum: 64.138976,-21.930084
+                    type: "policestation",
+                    location: {lat: 64.138976, long: -21.930084},
+                    address: "Hringbraut",
+                    units: 1,
+                    unittype: "policecar"
+                }				
+         ],
+         description: {
+             title: "FIRE FIRE FIRE",
+             description: "TUESDAY APRIL 19th. Baldur having failed in his duties as webmaster for nord.is has decided to burn down the servers. Baldur is currently keeping 4 hostages in Naustið, each of the hostages is heavily wounded and require immediate medical assistance."
+         }
+     },
+             //level 1
              {
                  location: {lat: 34.156769, long: -118.342013},
                  accidents: [
@@ -62,7 +126,8 @@ var gcc = {
                      description: "Bank robbery in progress, at the Bank of America. 2x suspects, heavily armed and wearing body armor, 1x person has been shot, status unknown. Extreme caution advised.... also my money's there so you need to get that back."
                  }
              },
-         //level 1
+			
+         //level 3
         {
             location: {lat: 34.435169, long: -119.797239},
             accidents: [
@@ -120,47 +185,47 @@ var gcc = {
 		stations: {
 			firestation: {
 				marker: "assets/pics/firestation-icon.png",
-				hoverMarker: "assets/pics/firestation-icon_sel.png" //FIXME
+				hoverMarker: "assets/pics/firestation-icon_sel.png"
 			},
 			policestation: {
 				marker: "assets/pics/policestation-icon.png",
-				hoverMarker: "assets/pics/policestation-icon_sel.png" //FIXME
+				hoverMarker: "assets/pics/policestation-icon_sel.png" 
 			},
 			hospital: {
 				marker: "assets/pics/hospital-icon.png",
-				hoverMarker: "assets/pics/hospital-icon_sel.png" //FIXME
+				hoverMarker: "assets/pics/hospital-icon_sel.png" 
 			}
 		},
 		accidents: {
 			fire: {
 				marker: "assets/pics/fire-icon.png",
-				hoverMarker: "assets/pics/fire-icon_sel.png" //FIXME
+				hoverMarker: "assets/pics/fire-icon_sel.png" 
 			},
 			carcrash: {
 				marker: "assets/pics/carcrash-icon.png",
-				hoverMarker: "assets/pics/carcrash-icon_sel.png" //FIXME
+				hoverMarker: "assets/pics/carcrash-icon_sel.png" 
 			},
 			robbery: {
 				marker: "assets/pics/robbery-icon.png",
-				hoverMarker: "assets/pics/robbery-icon_sel.png" //FIXME
+				hoverMarker: "assets/pics/robbery-icon_sel.png" 
 			}
 		},
 		units: {
                 firetruck: 
 				{	
 					marker : "assets/pics/firetruck_32.png",
-					hoverMarker : "assets/pics/firetruck_32_sel.png" //FIXME
+					hoverMarker : "assets/pics/firetruck_32_sel.png" 
 				},
 				
                 policecar: 
 				{
 					marker : "assets/pics/policecar_32.png",
-					hoverMarker: "assets/pics/policecar_32_sel.png" //FIXME
+					hoverMarker: "assets/pics/policecar_32_sel.png" 
 				},
                 ambulance: 
 				{
 					marker: "assets/pics/ambulance_32.png",
-					hoverMarker: "assets/pics/ambulance_32_sel.png" //FIXME
+					hoverMarker: "assets/pics/ambulance_32_sel.png" 
             	},
 
 		},
