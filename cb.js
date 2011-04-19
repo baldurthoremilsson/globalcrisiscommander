@@ -94,10 +94,10 @@ var controlBoxObject =
 		$('#controlbox .arrow-up').fadeOut();
 		$('#controlbox #controlboxExpanded').fadeOut('fast');
 		$('#overlay').animate(
-			{width: 190, height: 30},
+			{width: 200, height: 30},
 			200,
 			function() { $('#controlbox #controlboxCompressed').fadeIn('fast');
-						 $('#controlbox').css({width: 190, height: 30});
+						 $('#controlbox').css({width: 200, height: 30});
 						 $('#controlbox .arrow-down').fadeIn(); 
 					   } 
 			);
