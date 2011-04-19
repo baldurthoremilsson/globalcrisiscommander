@@ -61,12 +61,12 @@ var controlBoxObject =
 	
 	setLevel: function(level) {
 		this.level = level;
-		$('#level').html(level);
+		$('.level').html(level);
 		},
 	
 	setTimer: function(time) {
 		this.time = time;
-		$('#timer').html(time);
+		$('.timer').html(time);
 		},
 		
 	setScore: function(score) {
