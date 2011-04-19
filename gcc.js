@@ -10,7 +10,106 @@
 
 var gcc = {
     levels: [
-             //level 2
+	 //level 2
+     {
+		//64.141017,-21.959782 (Naustið)
+         location: {lat: 64.141017, long: -21.959782},
+         accidents: [
+             {
+                 location: {lat: 64.138855, long: -21.956082},
+                 type: "fire",
+                 address: "Dunhagi 5",
+                 incidents: [
+					{
+						type: "burningHouse",
+						timeout: 120
+					},
+                     {
+                     	type: "injury",
+                     	timeout: 45.0
+                     },
+                     {
+                     	type: "injury",
+                     	timeout: 45.0
+                     },
+                     {
+                     	type: "injury",
+                     	timeout: 45.0
+                     },
+					{
+						type: "injury",
+						timeout: 60
+					},
+					{
+						type: "robber",
+						timeout: 120
+					}
+                 ]
+             },
+			{
+                 location: {lat: 64.139117, long: -21.951682},
+                 type: "fire",
+                 address: "Dunhagi 5",
+                 incidents: [
+                     {
+                     	type: "injury",
+                     	timeout: 40.0
+                     },
+					{
+						type: "burningHouse",
+						timeout: 60
+					},
+                     {
+                     	type: "injury",
+                     	timeout: 40.0
+                     },
+                     {
+                     	type: "injury",
+                     	timeout: 40.0
+                     },
+                 ]
+             }
+         ],
+         stations: [
+             {
+				 //64.138396,-21.927166 Landspítalinn
+                 type: "hospital",
+                 location: {lat: 64.138396, long: -21.927166},
+                 address: "Hringbraut",
+                 units: 4,
+                 unittype: "ambulance"
+             },
+             {
+				 //64.121955,-21.888628 Bogginn
+                 type: "hospital",
+                 location: {lat: 64.121955, long: -21.888628},
+                 address: "Fossvogsvegur",
+                 units: 3,
+                 unittype: "ambulance"
+             },	
+			 {
+					//hjá landspítalanum: 64.138976,-21.930084
+                    type: "policestation",
+                    location: {lat: 64.138976, long: -21.930084},
+                    address: "Hringbraut",
+                    units: 1,
+                    unittype: "policecar"
+                },
+				{
+					//hjá landspítalanum: 64.138976,-21.930084
+                    type: "firestation",
+                    location: {lat: 64.130976, long: -21.930084},
+                    address: "Hringbraut",
+                    units: 5,
+                    unittype: "firetruck"
+                },
+         ],
+         description: {
+             title: "FIRE FIRE FIRE",
+             description: "TUESDAY APRIL 19th. Baldur having failed in his duties as webmaster for nord.is has decided to burn down the servers. Baldur is currently keeping 4 hostages in Naustid, each of the hostages is heavily wounded and require immediate medical assistance. Things however are not so simple because the fire has spread (somehow) to the University main building"
+         }
+     },
+             //level 1
              {
                  location: {lat: 34.156769, long: -118.342013},
                  accidents: [
@@ -21,15 +120,15 @@ var gcc = {
                          incidents: [
                              {
                              	type: "robber",
-                             	timeout: 30.0
+                             	timeout: 60.0
                              },
                              {
                              	type: "robber",
-                             	timeout: 30.0
+                             	timeout: 60.0
                              },
                              {
                              	type: "robber",
-                             	timeout: 30.0
+                             	timeout: 60.0
                              }
                          ]
                      }
@@ -62,7 +161,8 @@ var gcc = {
                      description: "Bank robbery in progress, at the Bank of America. 2x suspects, heavily armed and wearing body armor, 1x person has been shot, status unknown. Extreme caution advised.... also my money's there so you need to get that back."
                  }
              },
-         //level 1
+			
+         //level 3
         {
             location: {lat: 34.435169, long: -119.797239},
             accidents: [
@@ -73,15 +173,15 @@ var gcc = {
                     incidents: [
                         {
                         	type: "injury",
-                        	timeout: 30.0
+                        	timeout: 60.0
                         },
                         {
                         	type: "trappedInCar",
-                        	timeout: 30.0
+                        	timeout: 60.0
                         },
                         {
                         	type: "trafficjam",
-                        	timeout: 30.0
+                        	timeout: 60.0
                         }
                     ]
                 }
@@ -119,32 +219,50 @@ var gcc = {
     images: {
 		stations: {
 			firestation: {
-				marker: "assets/pics/firestation-icon.png"
+				marker: "assets/pics/firestation-icon.png",
+				hoverMarker: "assets/pics/firestation-icon_sel.png"
 			},
 			policestation: {
-				marker: "assets/pics/policestation-icon.png"
+				marker: "assets/pics/policestation-icon.png",
+				hoverMarker: "assets/pics/policestation-icon_sel.png" 
 			},
 			hospital: {
-				marker: "assets/pics/hospital-icon.png"
+				marker: "assets/pics/hospital-icon.png",
+				hoverMarker: "assets/pics/hospital-icon_sel.png" 
 			}
 		},
 		accidents: {
 			fire: {
-				marker: "assets/pics/fire-icon.png"
+				marker: "assets/pics/fire-icon.png",
+				hoverMarker: "assets/pics/fire-icon_sel.png" 
 			},
 			carcrash: {
-				marker: "assets/pics/carcrash-icon.png"
+				marker: "assets/pics/carcrash-icon.png",
+				hoverMarker: "assets/pics/carcrash-icon_sel.png" 
 			},
 			robbery: {
-				marker: "assets/pics/robbery-icon.png"
+				marker: "assets/pics/robbery-icon.png",
+				hoverMarker: "assets/pics/robbery-icon_sel.png" 
 			}
 		},
 		units: {
-			markers: {
-                firetruck: "assets/pics/firetruck_32.png",
-                policecar: "assets/pics/policecar_32.png",
-                ambulance: "assets/pics/ambulance_32.png"
-            }
+                firetruck: 
+				{	
+					marker : "assets/pics/firetruck_32.png",
+					hoverMarker : "assets/pics/firetruck_32_sel.png" 
+				},
+				
+                policecar: 
+				{
+					marker : "assets/pics/policecar_32.png",
+					hoverMarker: "assets/pics/policecar_32_sel.png" 
+				},
+                ambulance: 
+				{
+					marker: "assets/pics/ambulance_32.png",
+					hoverMarker: "assets/pics/ambulance_32_sel.png" 
+            	},
+
 		},
 		graphic: {
 			arrowUp: "assets/pics/arrow_up.png",
@@ -252,11 +370,11 @@ gcc.Game = function(id) {
         mapOptions: {
             zoom: 16,
             maxZoom: 16,
-            minZoom: 16,
+            minZoom: 14,
             center: new google.maps.LatLng(0, 0),
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             disableDefaultUI: true,
-            draggable: false
+            draggable: true
         },
         MENU_SIZE: 150,
         INFOBOX_RATIO: 0.75,
@@ -410,7 +528,7 @@ gcc.Game = function(id) {
         				return;
         	}
         	
-        	messagebox = $('<div title="YOU WON!"><p>You are a true hero :)</p></div>');
+        	messagebox = $('<div title="YOU WON!"><p>Mission Accomplished</p></div>');
         	messagebox.dialog({
         		modal: true,
         		draggable: false,
@@ -436,13 +554,26 @@ gcc.Accident = function(accident) {
     for(i = 0; i < accident.incidents.length; i++) {
         this.addIncident(accident.incidents[i]);
     }
-    
+
     this.infobox = new gcc.Infobox("dock", "accident", this.type, this.address)
     this.infobox.DOM
     	.data("accident", this)
     	.click(function() {
     		self.displayIncidents();
     	});
+		this.DOM.hover(
+			function()
+			{
+				self.marker.setIcon(gcc.images.accidents[self.type].hoverMarker);
+				//console.log("accident hover");
+			},
+			function()
+			{
+				self.marker.setIcon(gcc.images.accidents[self.type].marker);
+				//console.log("accident hover off");
+			}
+			
+	);
     this.marker = new google.maps.Marker({
         position: this.location,
         icon: gcc.images.accidents[this.type].marker
@@ -498,6 +629,19 @@ gcc.Station = function(station, game) {
     	.click(function() {
     		self.displayUnits();
     	});
+		this.DOM.hover(
+			function()
+			{
+				self.marker.setIcon(gcc.images.stations[self.type].hoverMarker); //FIXME: icon doesn't change back
+				//console.log("station hover");
+			},
+			function()
+			{
+				self.marker.setIcon(gcc.images.stations[self.type].marker); //FIXME: icon doesn't change back
+				//console.log("station hover off");
+			}
+			
+	);
     
     this.marker = new google.maps.Marker({
         position: this.location,
@@ -649,7 +793,14 @@ gcc.Unit = function(station, type) {
     this.infobox.DOM
     	.draggable(this.dragOpts)
     	.hide()
-    	.data('unit', this);
+    	.data('unit', this)
+    	.hover(function() {
+            self.marker.marker.setIcon(gcc.images.units[self.type].hoverMarker);
+            //console.log("unit hover");
+        }, function() {
+            self.marker.marker.setIcon(gcc.images.units[self.type].marker);
+            //console.log("unit hover off");
+        });
     gcc.game.DOM.sidebar.append(this.infobox.DOM);
     
     this.marker = new gcc.AnimatedMarker(this, this.station.location);
@@ -734,7 +885,7 @@ gcc.AnimatedMarker = function(unit, startPos) {
         position: startPos,
         map: gcc.game.map, // FIXME add to map in gcc.game.addUnit
 
-		icon: gcc.images.units.markers[unit.type],
+		icon: gcc.images.units[unit.type].marker,
 		visible: false
     });
 	this.polyline = new google.maps.Polyline({
