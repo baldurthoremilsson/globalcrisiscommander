@@ -416,11 +416,13 @@ gcc.Game = function(id) {
         		}
         	});
         	
+            this.time = 0;
         	this.pause();
         },
         nextLevel: function() {
         	this.currentLevel = (this.currentLevel+1) % gcc.levels.length;
         	this.startLevel(gcc.levels[this.currentLevel]);
+            controlBoxObject.setLevel(this.currentLevel);
         },
         addUnit: function(unit) {
         },
@@ -494,6 +496,7 @@ gcc.Game = function(id) {
         	if(this.running) {
         		this.time += currTime - this.lastUpdate;
                 this.updateUnits();
+                controlBoxObject.setTimer(parseInt(this.time/1000));
             }
         	this.lastUpdate = currTime;
         	
