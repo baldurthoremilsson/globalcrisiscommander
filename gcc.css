@@ -147,9 +147,21 @@ div.transparency {
 	margin: 2px;
 }
 
+
+
 #controlbox img {
 	position: absolute;
 	top: 4px;
 	right: 4px;
 	}
 	
+div.scoretext{ color: gold; }
+div.timertext{ color: gold; }
+div.leveltext{ color: gold; }
+
+div.expanded{
+	width: 166px;
+	position: relative;
+}
+
+

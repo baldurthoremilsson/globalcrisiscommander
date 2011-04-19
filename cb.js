@@ -10,17 +10,13 @@ var controlBoxObject =
 					'<img class="arrow-up" src="assets/pics/nav_arrow_up.png" style="display: none">'+
 
 					'<div id="controlboxCompressed">'+
-						'<div id="scoretext" class="cbc">Level</div><div id="level" class="cbc">1</div>'+
-						'<div id="timertext" class="cbc">Time</div><div id="timer" class="cbc">0</div>'+
-						'<div id="scoretext" class="cbc">Score</div><div id="score" class="cbc">0</div>'+
+						'<div class="scoretext cbc">Level</div><div class="score cbc">1</div>'+
+						'<div class="timertext cbc">Time</div><div class="timer cbc">0</div>'+
+						'<div class="leveltext cbc">Score</div><div class="level cbc">0</div>'+
 					'</div>'+
 					
 					'<div id="controlboxExpanded" style="display: none;">'+
-						'<div class="cbc">Estatus</div>'+
-						'<div class="cbc">Emusic - TODO</div>'+
-						'<div class="cbc">'+
-							'<tr><button id="pause">Pause Game</button></tr>'+
-							'<tr><button id="exit">Exit Game</button></tr>'+
+						'<div class="expanded">'+
 						'</div>'+
 					'</div>'+
 				 '</div>'+
@@ -53,10 +49,10 @@ var controlBoxObject =
 			$('#controlbox .arrow-down').fadeOut();
 			$('#controlbox #controlboxCompressed').fadeOut('fast');
 			$('#overlay').animate(
-				{width: 500, height: 50},
+				{width: 500, height: 100},
 				200,
 				function() { $('#controlbox #controlboxExpanded').fadeIn('fast');
-							 $('#controlbox').css({width: 500, height: 50});
+							 $('#controlbox').css({width: 500, height: 100});
 							 $('#controlbox .arrow-up').fadeIn();
 						   } 
 			);
