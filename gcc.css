@@ -15,6 +15,7 @@ body {
     width: 90%;
     padding: 0;
     margin: 0;
+    font-family: Verdana, sans-serif;
 }
 
 .map_canvas {
@@ -69,6 +70,8 @@ body {
     -moz-border-radius: 7px;
     -webkit-border-radius: 7px;
     -border-radius: 7px;
+    color: #CCCCCC;
+    overflow: hidden;
 }
     .infobox.policestation,
     .infobox.hospital,
@@ -80,18 +83,31 @@ body {
             cursor: move;
     }
     .infobox .description {
-        display: none;
+        position: relative;
+        width: 100%;
+        text-align: center;
+        font-weight: bold;
     }
+        .infobox .description h1 {
+            font-size: 16px;
+            margin: 0 0 3px 0;
+            padding: 0;
+        }
+        .infobox .description .position {
+            font-size: 12px;
+            font-style: italic;
+        }
     .infobox .background {
         position: absolute;
         height: 100%;
         width: 100%;
-        opacity: 0.5;
+        top: 0;
+        opacity: 0.7;
         background-repeat: no-repeat;
         background-position: center center;
     }
         .infobox:hover .background {
-            opacity: 0.7;
+            opacity: 0.9;
         }
         /* stations */
         .infobox.policestation .background {            
