@@ -622,9 +622,9 @@ gcc.Station = function(station, game) {
     		self.displayUnits();
     	})
     	.hover(function() {
-            self.marker.setIcon(gcc.images.stations[self.type].hoverMarker); //FIXME: icon doesn't change back
+            self.marker.setIcon(gcc.images.stations[self.type].hoverMarker);
         }, function() {
-            self.marker.setIcon(gcc.images.stations[self.type].marker); //FIXME: icon doesn't change back
+            self.marker.setIcon(gcc.images.stations[self.type].marker);
         });
     
     this.marker = new google.maps.Marker({
@@ -758,6 +758,7 @@ gcc.Incident = function(accident, incident) {
         expire: function() {
             this.expired = true;
             this.infobox.setStatus("Expired");
+            this.infobox.DOM.css('background-color', "#FF0000");
         },
 		remove: function() {
             this.infobox.remove();
