@@ -1,0 +1,4 @@
+Line count:
+wc -l gcc.js cb.js jquery.jplayer.min.js popup.js v3_epoly.js updategit.sh index.html gcc.css jplayer.blue.monday.css
+
+need also to add the tests we wrote ourselves
