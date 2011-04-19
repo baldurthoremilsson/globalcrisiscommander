@@ -560,20 +560,12 @@ gcc.Accident = function(accident) {
     	.data("accident", this)
     	.click(function() {
     		self.displayIncidents();
-    	});
-		this.DOM.hover(
-			function()
-			{
-				self.marker.setIcon(gcc.images.accidents[self.type].hoverMarker);
-				//console.log("accident hover");
-			},
-			function()
-			{
-				self.marker.setIcon(gcc.images.accidents[self.type].marker);
-				//console.log("accident hover off");
-			}
-			
-	);
+    	})
+    	.hover(function() {
+            self.marker.setIcon(gcc.images.accidents[self.type].hoverMarker);
+        }, function() {
+            self.marker.setIcon(gcc.images.accidents[self.type].marker);
+        });
     this.marker = new google.maps.Marker({
         position: this.location,
         icon: gcc.images.accidents[this.type].marker
@@ -628,20 +620,12 @@ gcc.Station = function(station, game) {
     	.data("station", this)
     	.click(function() {
     		self.displayUnits();
-    	});
-		this.DOM.hover(
-			function()
-			{
-				self.marker.setIcon(gcc.images.stations[self.type].hoverMarker); //FIXME: icon doesn't change back
-				//console.log("station hover");
-			},
-			function()
-			{
-				self.marker.setIcon(gcc.images.stations[self.type].marker); //FIXME: icon doesn't change back
-				//console.log("station hover off");
-			}
-			
-	);
+    	})
+    	.hover(function() {
+            self.marker.setIcon(gcc.images.stations[self.type].hoverMarker); //FIXME: icon doesn't change back
+        }, function() {
+            self.marker.setIcon(gcc.images.stations[self.type].marker); //FIXME: icon doesn't change back
+        });
     
     this.marker = new google.maps.Marker({
         position: this.location,
@@ -796,10 +780,8 @@ gcc.Unit = function(station, type) {
     	.data('unit', this)
     	.hover(function() {
             self.marker.marker.setIcon(gcc.images.units[self.type].hoverMarker);
-            //console.log("unit hover");
         }, function() {
             self.marker.marker.setIcon(gcc.images.units[self.type].marker);
-            //console.log("unit hover off");
         });
     gcc.game.DOM.sidebar.append(this.infobox.DOM);
     
