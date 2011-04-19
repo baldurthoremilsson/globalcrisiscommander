@@ -25,10 +25,12 @@ div.jp-video {
 
 	font-family:Verdana, Arial, sans-serif;
 	line-height:1.6;
-	color: #666;
+	/*color: #666;*/
+    color: white;
 }
 div.jp-audio {
-	width:420px;
+	/*width:420px;*/
+    width: 390px;
 
 }
 
@@ -46,10 +48,10 @@ div.jp-video-360p {
 }
 div.jp-interface {
 	position: relative;
-	background-color:#eee;
+	/*background-color:#eee;*/
 	/* width:418px; */
 	width:100%;
-	border:1px solid #009be3;
+	/*border:1px solid #009be3;*/
 }
 
 div.jp-interface-min {

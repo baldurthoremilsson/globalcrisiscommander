@@ -146,35 +146,6 @@ body {
             background-image: url('assets/pics/trafficjam.gif');
         }
 
-/*
-#controlbox {
-	width: 180px;
-	color: #fff;
-	position: absolute;
-	top: 0;
-	left: 10px;
-	-moz-box-shadow: 0 0 5px #888;
-	-webkit-box-shadow: 0 0 5px #888;
-	box-shadow: 0 0 5px #888;
-	padding: 13px 5px 5px 5px;
-	z-index: 3;
-	 border: 2px solid black;
-    -moz-border-radius: 7px;
-    -webkit-border-radius: 7px;
-    -border-radius: 7px;
-
-}
-div.transparency {
-	width: 180px;
-	position: absolute;
-	background-color: black;
-	z-index: 2;
-	opacity: 0.5;
-}
-*/
-
-/*#controlboxCompressed { width: 180px; }*/
-
 #overlay {
 	height: 30px; 
 	width: 190px;
@@ -224,9 +195,5 @@ div.scoretext{ color: gold; }
 div.timertext{ color: gold; }
 div.leveltext{ color: gold; }
 
-div.expanded{
-	width: 166px;
-	position: relative;
-}
 
 
