@@ -152,7 +152,30 @@ var gcc = {
 			arrowRight: "assets/pics/arrow_right.png",
 			arrowLeft: "assets/pics/arrow_left.png"
 		},
-	}
+	},
+	info: {
+        title: {
+            policestation: "Police station",
+            firestation: "Fire station",
+            hospital: "Hospital",
+            
+            policecar: "Police car",
+            firetruck: "Firetruck",
+            ambulance: "Ambulance",
+            
+            fire: "Fire",
+            carcrash: "Car crash",
+            robbery: "Robbery",
+            
+            injury: "Injury",
+            burningHouse: "Burning house",
+            trappedInHouse: "Trapped in burning house",
+            trappedInCar: "Trapped in burning car",
+            burningCar: "Burning car",
+            robber: "Robber",
+            trafficjam: "Traffic jam"
+        }
+    }
 };
 
 UNIT_INTERVAL = 1;
@@ -287,7 +310,7 @@ gcc.Game = function(id) {
             this.accidents.push(accident);
             
             accident.marker.setMap(this.map);
-            this.DOM.dock.append(accident.DOM);
+            this.DOM.dock.append(accident.infobox.DOM);
         },
         addStation: function(station) {
         	var i;
@@ -295,7 +318,7 @@ gcc.Game = function(id) {
             this.stations.push(station);
             
             station.marker.setMap(this.map);
-            this.DOM.sidebar.append(station.DOM);
+            this.DOM.sidebar.append(station.infobox.DOM);
             
             for(i = 0; i < station.units.length; i++)
             	this.addUnit(station.units[i]);
@@ -325,7 +348,7 @@ gcc.Game = function(id) {
             dock.children().hide();
             
             for(i = 0; i < this.accidents.length; i++)
-                this.accidents[i].DOM.displayItem();
+                this.accidents[i].infobox.DOM.displayItem();
         },
         displayStations: function() {
             var sidebar = this.DOM.sidebar,
@@ -333,7 +356,7 @@ gcc.Game = function(id) {
             sidebar.children().hide();
             
             for(i = 0; i < this.stations.length; i++)
-                this.stations[i].DOM.displayItem();
+                this.stations[i].infobox.DOM.displayItem();
         },
         updateUnits: function() {
         	var i,
@@ -405,6 +428,7 @@ gcc.Accident = function(accident) {
     var self = this,
     	i;
     
+    this.address = accident.address;
     this.location = new google.maps.LatLng(accident.location.lat, accident.location.long);
     this.type = accident.type;
     this.incidents = [];
@@ -413,7 +437,8 @@ gcc.Accident = function(accident) {
         this.addIncident(accident.incidents[i]);
     }
     
-    this.DOM = gcc.getInfobox("dock", "accident", this.type)
+    this.infobox = new gcc.Infobox("dock", "accident", this.type, this.address)
+    this.infobox.DOM
     	.data("accident", this)
     	.click(function() {
     		self.displayIncidents();
@@ -436,7 +461,7 @@ gcc.Accident = function(accident) {
             dock.children().hide();
             gcc.game.DOM.dockLink.displayItem();
             for(i = 0; i < this.incidents.length; i++)
-                this.incidents[i].DOM.displayItem();
+                this.incidents[i].infobox.DOM.displayItem();
             
             return false;
         },
@@ -446,7 +471,7 @@ gcc.Accident = function(accident) {
         remove: function() {
             var incident;
             
-            this.DOM.remove();
+            this.infobox.remove();
             this.marker.setMap(null);
             google.maps.event.removeListener(this.markerListener);
             
@@ -463,10 +488,12 @@ gcc.Station = function(station, game) {
         unit,
         i;
     
+    this.address = station.address;
     this.location = new google.maps.LatLng(station.location.lat, station.location.long);
     this.type = station.type;
     
-    this.DOM = this.DOM = gcc.getInfobox("sidebar", "station", this.type)
+    this.infobox = new gcc.Infobox("sidebar", "station", this.type, this.address);
+    this.infobox.DOM
     	.data("station", this)
     	.click(function() {
     		self.displayUnits();
@@ -496,14 +523,14 @@ gcc.Station = function(station, game) {
             sidebar.children().hide();
             gcc.game.DOM.sidebarLink.displayItem();
             for(i = 0; i < this.units.length; i++)
-                this.units[i].DOM.displayItem();
+                this.units[i].infobox.DOM.displayItem();
             
             return false;
         },
         remove: function() {
             var unit;
             
-            this.DOM.remove();
+            this.infobox.remove();
             this.marker.setMap(null);
             google.maps.event.removeListener(this.markerListener);
             
@@ -524,7 +551,8 @@ gcc.Incident = function(accident, incident) {
     this.resolved = false;
     this.expired = false;
     
-    this.DOM = gcc.getInfobox("dock", "incident", this.type)
+    this.infobox = new gcc.Infobox("dock", "incident", this.type, this.accident.address);
+    this.infobox.DOM
     	.data("incident", this)
     	.droppable({
     		accept: function(draggable) {
@@ -537,14 +565,14 @@ gcc.Incident = function(accident, incident) {
     		},
     		drop: function(event, ui) {
     			var unit = ui.draggable.data('unit');
-                
                 if(unit.occupied || self.expired)
                     return;
+                
     			unit.goTo(self.accident.location, self);
     		}
     	})
     	.hide();
-    gcc.game.DOM.dock.append(this.DOM);
+    gcc.game.DOM.dock.append(this.infobox.DOM);
     
     this.timeoutHandle = setTimeout(function() {
         self.timeout();
@@ -563,7 +591,7 @@ gcc.Incident = function(accident, incident) {
 		},
 		resolve: function() {
             this.resolved = true;
-            this.DOM.css('background-color', "green");
+            this.infobox.DOM.css('background-color', "green");
             gcc.game.checkWinningConditions();
         },
         timeout: function() {
@@ -601,9 +629,10 @@ gcc.Incident = function(accident, incident) {
         },
         expire: function() {
             this.expired = true;
+            this.infobox.setStatus("Expired");
         },
 		remove: function() {
-            this.DOM.remove();
+            this.infobox.remove();
             clearTimeout(this.timeoutHandle);
         }
 	};
@@ -616,11 +645,12 @@ gcc.Unit = function(station, type) {
     this.target = null;
     this.occupied = false;
 
-    this.DOM = gcc.getInfobox("sidebar", "unit", this.type)
+    this.infobox = new gcc.Infobox("sidebar", "unit", this.type, this.station.address);
+    this.infobox.DOM
     	.draggable(this.dragOpts)
     	.hide()
     	.data('unit', this);
-    gcc.game.DOM.sidebar.append(this.DOM);
+    gcc.game.DOM.sidebar.append(this.infobox.DOM);
     
     this.marker = new gcc.AnimatedMarker(this, this.station.location);
 };
@@ -630,7 +660,7 @@ gcc.Unit = function(station, type) {
 			revert: true
 		},
 		remove: function() {
-            this.DOM.remove();
+            this.infobox.remove();
             this.marker.remove();
         },
         goTo: function(location, incident) {
@@ -781,34 +811,48 @@ gcc.AnimatedMarker = function(unit, startPos) {
 	};
 
 // Infoboxes are displayed in the dock and sidebar
-gcc.getInfobox = function(position, category, type) {
-	var infoBox,
-		width,
+gcc.Infobox = function(position, category, type, address) {
+	var width,
 		height;
 	
 	switch(position) {
 		case "dock":
-			height = this.game.MENU_SIZE - 24;
-			width = height * this.game.INFOBOX_RATIO;
+			height = gcc.game.MENU_SIZE - 24;
+			width = height * gcc.game.INFOBOX_RATIO;
 			break;
 		case "sidebar":
-			width = this.game.MENU_SIZE - 24;
-			height = width * this.game.INFOBOX_RATIO;
+			width = gcc.game.MENU_SIZE - 24;
+			height = width * gcc.game.INFOBOX_RATIO;
 			break;
 	}
 	
-	infoBox = $(
-		'<div class="infobox ' + category + ' ' + type + '">' +
-			'<div class="background"></div>' +
-			'<div class="description">' +
-				'<div class="text">' +
-					'description' +
-				'</div>' +
-			'<div class="background"></div>' +
-		'</div>'
-	).width(width).height(height);
-	
-	return infoBox;
+	this.DOM = $('<div class="infobox ' + category + ' ' + type + '"></div>');
+    this.title = $('<h1>' + gcc.info.title[type] + '</h1>');
+    this.position = $('<div class="position">' + address + '</div>');
+    this.status = $('<div class="status">Active</div>');
+    
+    this.DOM
+        .width(width)
+        .height(height)
+        .append($('<div class="background"></div>'))
+        .append($('<div class="description"></div>')
+            .append(this.title)
+            .append(this.position)
+            .append(this.status)
+        );
 };
-
+    gcc.Infobox.prototype = {
+        setTitle: function(title) {
+            this.title.text(title);
+        },
+        setPosition: function(position) {
+            this.position.text(position);
+        },
+        setStatus: function(status) {
+            this.status.text(status);
+        },
+        remove: function() {
+            this.DOM.remove();
+        }
+    };
 
